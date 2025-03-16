@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
 
     /// /////////////////////////////////////////////
 
-
     // Az adatok tárolására használt StringBuilder
     StringBuilder details = new StringBuilder();
 
