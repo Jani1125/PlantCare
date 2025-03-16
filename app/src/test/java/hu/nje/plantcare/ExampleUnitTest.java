@@ -1,4 +1,4 @@
-package com.greencoders.plantcare;
+package hu.nje.plantcare;
 
 import org.junit.Test;
 

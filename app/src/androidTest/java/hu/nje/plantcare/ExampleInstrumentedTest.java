@@ -1,4 +1,4 @@
-package com.greencoders.plantcare;
+package hu.nje.plantcare;
 
 import android.content.Context;
 
