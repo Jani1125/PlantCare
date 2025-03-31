@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_own_plant" android:title="Own plant"/>
+    <item android:id="@+id/menu_fav_plant" android:title="Favorite plant"/>
+    <item android:id="@+id/menu_reminder" android:title="Reminder"/>
+    <item android:id="@+id/menu_settings" android:title="Settings"/>
+    <item android:id="@+id/menu_registration" android:title="Registration"/>
+    <item android:id="@+id/menu_login" android:title="Log in"/>
+</menu>

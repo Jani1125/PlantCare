@@ -1,0 +1,10 @@
+<shape xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:ignore="ExtraText">
+    <solid android:color="#FFFFFF"/> <!-- Fehér háttérszín -->
+    <stroke
+        android:color="#FFFFFF"  <!-- Fehér színű keret -->
+        android:width="2dp"
+    />  <!-- A keret vastagsága -->
+    <corners android:radius="8dp"/> <!-- Lekerekített sarkok, ha szeretnéd -->
+</shape>
