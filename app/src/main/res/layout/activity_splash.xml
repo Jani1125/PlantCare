@@ -22,4 +22,11 @@
         android:textColorLink="#00FFFFFF"
         android:textSize="18sp"
         android:textStyle="bold" />
+
+    <!-- Fragment helye -->
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true" />
 </RelativeLayout>

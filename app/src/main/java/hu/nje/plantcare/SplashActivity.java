@@ -7,6 +7,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -20,11 +23,21 @@ public class SplashActivity extends AppCompatActivity {
         Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
         logoButton.startAnimation(fadeIn);
 
-        // 3 másodperc után átlép a főképernyőre
+        // Ellenőrizzük, hogy a felhasználó be van-e jelentkezve
         new Handler().postDelayed(() -> {
-            Intent intent = new Intent(SplashActivity.this, GoogleSignInActivity.class);
-            startActivity(intent);
-            finish();
-        }, 3000);
+            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+            if (account != null) {
+                // Ha már be van jelentkezve, akkor a főoldalra megy
+                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                // Ha nincs bejelentkezve, akkor a GoogleSignInFragment-et jelenítjük meg
+                GoogleSignInFragment fragment = new GoogleSignInFragment();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, fragment); // Itt használjuk a fragment_containert
+                transaction.commit();
+            }
+        }, 3000); // 3 másodperc késleltetés
     }
 }

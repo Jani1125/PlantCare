@@ -1,1 +1,47 @@
-{"installed":{"client_id":"907763835720-5sld1efaam98ien9r40fja8glu2mdvku.apps.googleusercontent.com","project_id":"plantcare-455319","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs"}}
+{
+  "project_info": {
+    "project_number": "834925289286",
+    "project_id": "plantcare-57bc5",
+    "storage_bucket": "plantcare-57bc5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:834925289286:android:5a4f2e1a36884c14ed8f47",
+        "android_client_info": {
+          "package_name": "hu.nje.plantcare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "834925289286-1cmcg7qh188e9iik3rjp01ekk434bje1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "hu.nje.plantcare",
+            "certificate_hash": "e584157c363234d786020c06267d2b07b45e389b"
+          }
+        },
+        {
+          "client_id": "834925289286-vcsl28n1213nalnhsmvudqm1827gd70k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtWm5wjhovtU_tAfKMxP65lWDkurIebIQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "834925289286-vcsl28n1213nalnhsmvudqm1827gd70k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
