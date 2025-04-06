@@ -1,17 +1,24 @@
 package hu.nje.plantcare;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.MenuAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+
 import org.json.JSONArray;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import hu.nje.plantcare.database.*;
@@ -35,10 +42,18 @@ public class MainActivity extends AppCompatActivity {
     // Az adatok tárolására használt StringBuilder
     StringBuilder details = new StringBuilder();
 
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+
+
+
+
 
         // Az UI elemek inicializálása azonosító által
         data = findViewById(R.id.data);
@@ -77,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         }).start();
+
     }
 
     /**

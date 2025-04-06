@@ -37,6 +37,7 @@ dependencies {
     implementation libs.constraintlayout
     implementation libs.firebase.inappmessaging
     implementation libs.preference
+    implementation libs.volley
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
@@ -60,4 +61,7 @@ dependencies {
     //Offline adatbázishoz kellő csomagok
     implementation "androidx.room:room-runtime:2.5.2"
     annotationProcessor "androidx.room:room-compiler:2.6.1"
+
+    //Recyclerviewhez
+    implementation "androidx.recyclerview:recyclerview:1.4.0"
 }

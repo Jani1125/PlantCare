@@ -6,24 +6,20 @@
     android:layout_height="match_parent"
     android:background="@drawable/mainpic">
 
-    <!-- Itt van a háttér -->
-
-    <!-- CardView, amely tartalmazza a tartalmat -->
-
+    <!-- Fejléc -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/header"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="29dp"
-        tools:ignore="MissingConstraints">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
             android:id="@+id/profile_image"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginTop="4dp"
             android:scaleType="centerCrop"
             android:src="@drawable/userpic"
             app:layout_constraintStart_toStartOf="parent"
@@ -40,13 +36,11 @@
             android:backgroundTint="@android:color/white"
             android:elevation="8dp"
             android:padding="10dp"
-
-            app:layout_constraintBottom_toBottomOf="@id/profile_image"
-            app:layout_constraintEnd_toStartOf="@id/menu_icon"
-            app:layout_constraintStart_toEndOf="@id/profile_image"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/profile_image"
+            app:layout_constraintStart_toEndOf="@id/profile_image"
+            app:layout_constraintEnd_toStartOf="@id/menu_icon"
             app:layout_constraintVertical_bias="1.0" />
-
 
         <ImageView
             android:id="@+id/menu_icon"
@@ -54,118 +48,98 @@
             android:layout_height="32dp"
             android:layout_marginEnd="8dp"
             android:src="@drawable/menuicon"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/profile_image"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.2"
             tools:ignore="ContentDescription" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <!-- CardView -->
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         app:cardCornerRadius="16dp"
         app:cardElevation="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent">
 
-        <!-- ConstraintLayout a CardView-n belül -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="754dp"
-            tools:visibility="visible">
+            android:layout_height="750dp"
+            android:padding="16dp">
 
-            <!-- Szív ikon -->
-
-            <!-- Kép és szöveg első elem -->
-
-            <!-- Kép és szöveg második elem -->
+            <!-- 1. Kép -->
 
             <ImageView
-                android:id="@+id/heartIcon"
-                android:layout_width="53dp"
-                android:layout_height="44dp"
-                android:layout_marginTop="16dp"
-                android:src="@drawable/ic_heart"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.05"
-                app:layout_constraintMarginStart="16dp"
-                app:layout_constraintMarginTop="16dp"
+                android:id="@+id/image1"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@android:color/darker_gray"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@android:color/black"
                 tools:ignore="ContentDescription" />
 
-            <LinearLayout
-                android:id="@+id/firstItem"
-                android:layout_width="325dp"
-                android:layout_height="226dp"
-                android:layout_marginStart="16dp"
-                android:orientation="vertical"
-                android:padding="16dp"
-                app:layout_constraintMarginTop="16dp"
+            <!-- 1. Szöveg -->
+            <TextView
+                android:id="@+id/title1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Title"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/image1"
+                app:layout_constraintTop_toBottomOf="@id/image1" />
+
+            <!-- 1. Gomb -->
+
+            <TextView
+                android:id="@+id/title2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="264dp"
+                android:text="Title"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/image1"
+                app:layout_constraintTop_toBottomOf="@id/image1" />
+
+            <Button
+                android:id="@+id/button1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Check"
+                app:layout_constraintStart_toStartOf="@id/title1"
+                app:layout_constraintTop_toBottomOf="@id/title1" />
+
+            <!-- 2. Kép -->
+
+            <!-- 2. Gomb -->
+            <ImageView
+                android:id="@+id/image2"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="64dp"
+                android:background="@android:color/darker_gray"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:layout_editor_absoluteY="112dp"
-                tools:ignore="MissingConstraints">
+                app:layout_constraintTop_toBottomOf="@id/button1"
+                tools:ignore="ContentDescription" />
 
-                <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:background="@android:color/darker_gray"
-                    tools:ignore="ContentDescription" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Title"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Check" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/secondItem"
-                android:layout_width="329dp"
-                android:layout_height="214dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="40dp"
-                android:orientation="vertical"
-                android:padding="16dp"
-                app:layout_constraintMarginTop="16dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/firstItem">
-
-                <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:background="@android:color/darker_gray"
-                    tools:ignore="ContentDescription" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Title"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:minHeight="48dp"
-                    android:text="Check"
-                    tools:ignore="TouchTargetSizeCheck" />
-            </LinearLayout>
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:minHeight="48dp"
+                android:text="Check"
+                app:layout_constraintStart_toStartOf="@id/image2"
+                app:layout_constraintTop_toBottomOf="@id/image2"
+                tools:ignore="TouchTargetSizeCheck" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
