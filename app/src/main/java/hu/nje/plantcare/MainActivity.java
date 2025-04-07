@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         menuItems.add("Search");
         menuItems.add("Favourite plants");
         menuItems.add("Own plants");
+        menuItems.add("Plant scanner");
         menuItems.add("Settings");
 
         // RecyclerView beállítása
