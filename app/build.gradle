@@ -48,6 +48,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx' // If using Firebase Authentication
     // ... other dependencies
 
+    implementation 'androidx.cardview:cardview:1.0.0'
+
+
     // Google Sign-In dependency
     implementation 'com.google.android.gms:play-services-auth:21.3.0'
 
@@ -60,4 +63,8 @@ dependencies {
     //Offline adatbázishoz kellő csomagok
     implementation "androidx.room:room-runtime:2.5.2"
     annotationProcessor "androidx.room:room-compiler:2.6.1"
+
+    implementation 'com.github.bumptech.glide:glide:4.16.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.16.0'
+
 }
