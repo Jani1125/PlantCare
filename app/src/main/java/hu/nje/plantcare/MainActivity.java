@@ -2,11 +2,10 @@ package hu.nje.plantcare;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.widget.ImageView;
+
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.menu.MenuAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,13 +16,18 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import hu.nje.plantcare.database.*;
+import hu.nje.plantcare.recyclerview.adapter.RecyclerAdapter;
+import hu.nje.plantcare.recyclerview.model.RecyclerModel;
 
 public class MainActivity extends AppCompatActivity {
+    private RecyclerView recyclerView;
+    private List<RecyclerModel>recyclerModels = new ArrayList<>();
+    private RecyclerAdapter recyclerAdapter;
 
     //////////// API kulcs és az API URL alapja  /////////////////////////
     private static final String API_KEY = "sk-MzET67d004cc29a259082";
@@ -42,17 +46,11 @@ public class MainActivity extends AppCompatActivity {
     // Az adatok tárolására használt StringBuilder
     StringBuilder details = new StringBuilder();
 
-    @SuppressLint("WrongViewCast")
+    @SuppressLint({"WrongViewCast", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-
-
-
-
 
 
         // Az UI elemek inicializálása azonosító által
@@ -149,5 +147,22 @@ public class MainActivity extends AppCompatActivity {
 
         // Az API kérést hozzáadjuk a Volley kérési sorához
         Volley.newRequestQueue(this).add(request);
+        recyclerView= findViewById(R.id.option);
+
+        //adatok a recyclerhez
+        recyclerModels.add(new RecyclerModel("Own plant"));
+        recyclerModels.add(new RecyclerModel("Favorite plant"));
+        recyclerModels.add(new RecyclerModel("Reminder"));
+        recyclerModels.add(new RecyclerModel("Settings"));
+        recyclerModels.add(new RecyclerModel("Registration"));
+        recyclerModels.add(new RecyclerModel("Login"));
+
+        //adapter hívás
+        recyclerAdapter = new RecyclerAdapter(this,recyclerModels);
+
+        //adapter beállítása a recyclerhez
+        recyclerView.setAdapter(recyclerAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this
+        ));
     }
 }
