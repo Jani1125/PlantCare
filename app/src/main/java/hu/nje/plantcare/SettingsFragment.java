@@ -9,15 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.Request;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -25,15 +21,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 
-import org.json.JSONArray;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import hu.nje.plantcare.adapters.MenuAdapter;
-import hu.nje.plantcare.database.*;
 
-public class SearchFragment extends Fragment {
+public class SettingsFragment extends Fragment {
 
     private RecyclerView menuRecyclerView;
     private MenuAdapter menuAdapter;
@@ -41,14 +34,8 @@ public class SearchFragment extends Fragment {
     private LinearLayout menuLayout;
 
     private ImageView profileImageView;
-    private TextView data;
-    private TextView infoText;
-    private StringBuilder details = new StringBuilder();
 
-    private static final String API_KEY = "sk-MzET67d004cc29a259082";
-    private static final String baseUrl = "https://perenual.com/api/v2/species/details/";
-
-    public SearchFragment() {
+    public SettingsFragment() {
         // Required empty public constructor
     }
 
@@ -69,7 +56,7 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_search, container, false);
+        View view = inflater.inflate(R.layout.fragment_settings, container, false);
 
         menuRecyclerView = view.findViewById(R.id.menuRecyclerView);
         menuRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

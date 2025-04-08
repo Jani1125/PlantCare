@@ -78,11 +78,49 @@ public class MainActivity extends AppCompatActivity {
         // RecyclerView beállítása
         menuRecyclerView = findViewById(R.id.menuRecyclerView);
         menuRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        menuAdapter = new MenuAdapter(menuItems, item -> {
-            // Menüelemre kattintva valami történhet (például Activity váltás)
-            Toast.makeText(MainActivity.this, "Clicked: " + item, Toast.LENGTH_SHORT).show();
+
+        // Menü adapter beállítása
+        menuAdapter = new MenuAdapter(this, menuItems, item -> {
+            if ("Home".equals(item)) {
+                // MainActivity indítása újra
+                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            } else if ("Search".equals(item)) {
+                // Search fragment betöltése
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new SearchFragment())
+                        .addToBackStack(null)
+                        .commit();
+            } /*else if ("Favourite plants".equals(item)) {
+                // Favourite plants fragment betöltése
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new FavouritePlantsFragment())
+                        .addToBackStack(null)
+                        .commit();
+            } else if ("Own plants".equals(item)) {
+                // Own plants fragment betöltése
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new OwnPlantsFragment())
+                        .addToBackStack(null)
+                        .commit();
+            } else if ("Plant scanner".equals(item)) {
+                // Plant scanner fragment betöltése
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new PlantScannerFragment())
+                        .addToBackStack(null)
+                        .commit();
+            }*/ else if ("Settings".equals(item)) {
+                // Settings fragment betöltése
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new SettingsFragment())
+                        .addToBackStack(null)
+                        .commit();
+            }
             menuRecyclerView.setVisibility(View.GONE);  // Menüpontok elrejtése
         });
+
+        // RecyclerView adapter beállítása
         menuRecyclerView.setAdapter(menuAdapter);
 
         // Hamburger menü ikon kattintás kezelése
@@ -120,6 +158,21 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             });
             popup.show();
+        });
+    }
+
+    // 🚪 Kijelentkezés logika
+    private void signOut() {
+        FirebaseAuth.getInstance().signOut();
+
+        GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(this,
+                new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build());
+
+        googleSignInClient.signOut().addOnCompleteListener(this, task -> {
+            Intent intent = new Intent(this, SplashActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish(); // lezárja a jelenlegi Activity-t
         });
     }
 
@@ -217,20 +270,4 @@ public class MainActivity extends AppCompatActivity {
         // Az API kérést hozzáadjuk a Volley kérési sorához
         Volley.newRequestQueue(this).add(request);
     }*/
-
-
-    // 🚪 Kijelentkezés logika
-    private void signOut() {
-        FirebaseAuth.getInstance().signOut();
-
-        GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(this,
-                new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build());
-
-        googleSignInClient.signOut().addOnCompleteListener(this, task -> {
-            Intent intent = new Intent(this, SplashActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            finish(); // lezárja a jelenlegi Activity-t
-        });
-    }
 }

@@ -1,5 +1,7 @@
 package hu.nje.plantcare.adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -16,15 +18,17 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
 
     private List<String> menuItems;
     private OnMenuItemClickListener listener;
+    private Context context;
 
-    public MenuAdapter(List<String> menuItems, OnMenuItemClickListener listener) {
+    public MenuAdapter(Context context, List<String> menuItems, OnMenuItemClickListener listener) {
+        this.context = context;
         this.menuItems = menuItems;
         this.listener = listener;
     }
 
     @Override
     public MenuViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.menu_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.menu_item, parent, false);
         return new MenuViewHolder(view);
     }
 
@@ -53,4 +57,3 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
         void onMenuItemClick(String item);
     }
 }
-
