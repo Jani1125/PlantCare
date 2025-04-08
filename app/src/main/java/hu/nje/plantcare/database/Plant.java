@@ -21,6 +21,8 @@ public class Plant {
         this.watering = watering;
     }
 
+
+
     public int getId() {
         return id;
     }
@@ -68,5 +70,7 @@ public class Plant {
     public void setWatering(String watering) {
         this.watering = watering;
     }
+
+
 }
 
