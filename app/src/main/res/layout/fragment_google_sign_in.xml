@@ -40,9 +40,11 @@
     <!-- Google Sign-In gomb -->
     <com.google.android.gms.common.SignInButton
         android:id="@+id/sign_in_button"
-        android:layout_width="157dp"
+        android:layout_width="300dp"
         android:layout_height="58dp"
         android:textAlignment="center"
+
+        app:buttonSize="wide"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
