@@ -1,3 +1,4 @@
+
 package hu.nje.plantcare;
 
 import android.annotation.SuppressLint;
@@ -16,7 +17,7 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 
-
+import hu.nje.plantcare.adapters.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
 
     private List<Plant> plantList;
+
+    private  int count;
 
 
     //////////// API kulcs és az API URL alapja  /////////////////////////
