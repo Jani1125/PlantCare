@@ -9,7 +9,8 @@
         android:id="@+id/menuItemText"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/radius_background"
+
+        android:background="@drawable/border_box"
         android:fontFamily="sans-serif-black"
         android:gravity="center"
         android:padding="16dp"

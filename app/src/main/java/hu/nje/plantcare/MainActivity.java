@@ -98,19 +98,21 @@ public class MainActivity extends AppCompatActivity {
                         .replace(R.id.fragment_container, new FavPlantFragment())
                         .addToBackStack(null)
                         .commit();
-            } else if ("Own plants".equals(item)) {
-                // Own plants fragment betöltése
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new OwnPlantFragment())
-                        .addToBackStack(null)
-                        .commit();
-            } /*else if ("Plant scanner".equals(item)) {
+
+            }else if ("Own plants".equals(item)) {
+            // Own plants fragment betöltése
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new OwnPlantFragment())
+                    .addToBackStack(null)
+                    .commit();
+            }
+           /*
+             else if ("Plant scanner".equals(item)) {
                 // Plant scanner fragment betöltése
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, new PlantScannerFragment())
                         .addToBackStack(null)
                         .commit();
-
             }*/ else if ("Settings".equals(item)) {
                 // Settings fragment betöltése
                 getSupportFragmentManager().beginTransaction()
@@ -118,6 +120,8 @@ public class MainActivity extends AppCompatActivity {
                         .addToBackStack(null)
                         .commit();
             }
+
+
             menuRecyclerView.setVisibility(View.GONE);  // Menüpontok elrejtése
         });
 

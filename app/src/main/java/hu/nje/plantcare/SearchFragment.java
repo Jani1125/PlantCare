@@ -86,19 +86,19 @@ public class SearchFragment extends Fragment {
                         .replace(R.id.fragment_container, new SearchFragment())
                         .addToBackStack(null)
                         .commit();
-            }/*else if ("Favourite plants".equals(item)) {
+            }else if ("Favourite plants".equals(item)) {
                 // Settings fragment betöltése
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new FavouritePlantsFragment())
+                        .replace(R.id.fragment_container, new FavPlantFragment())
                         .addToBackStack(null)
                         .commit();
             } else if ("Own plants".equals(item)) {
                 // Settings fragment betöltése
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new OwnPlantsFragment())
+                        .replace(R.id.fragment_container, new OwnPlantFragment())
                         .addToBackStack(null)
                         .commit();
-            } else if ("Plant scanner".equals(item)) {
+            } /*else if ("Plant scanner".equals(item)) {
                 // Settings fragment betöltése
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, new PlantScannerFragment())

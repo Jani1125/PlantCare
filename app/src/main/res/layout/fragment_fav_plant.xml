@@ -30,9 +30,11 @@
         android:layout_height="112dp"
         android:contentDescription="Fav Icon"
         android:src="@drawable/plantfavpic"
-        tools:ignore="DuplicateIds,MissingConstraints"
-        tools:layout_editor_absoluteX="130dp"
-        tools:layout_editor_absoluteY="747dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/favrecyclerView"
+        tools:ignore="DuplicateIds,MissingConstraints" />
 
     <ImageView
         android:id="@+id/HeartImage"
@@ -40,9 +42,11 @@
         android:layout_height="55dp"
         android:contentDescription="Heart Icon"
         android:src="@drawable/ic_heart"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="104dp" />
+        app:layout_constraintBottom_toTopOf="@+id/favrecyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/profileImageView"
@@ -84,7 +88,9 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         android:layout_marginTop="50dp"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        android:elevation="10dp"
+       />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/favrecyclerView"
