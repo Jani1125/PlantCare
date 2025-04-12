@@ -12,7 +12,7 @@ public class Plant {
     public String type;
     public String cycle;
     public String watering;
-    public boolean isFavorite;  // új mező a kedvencek tárolásához
+
 
     public Plant(String commonName, String scientificName, String type, String cycle, String watering) {
         this.commonName = commonName;
@@ -20,8 +20,10 @@ public class Plant {
         this.type = type;
         this.cycle = cycle;
         this.watering = watering;
-        this.isFavorite = isFavorite;
+
     }
+
+
 
     // Getterek és setterek
     public int getId() {
@@ -68,15 +70,15 @@ public class Plant {
         return watering;
     }
 
-    public void setWatering(String watering) {
-        this.watering = watering;
+
+
+
+    public void setFavorite(boolean isFavorite) {
     }
 
     public boolean isFavorite() {
-        return isFavorite;
+        return false;
     }
 
-    public void setFavorite(boolean favorite) {
-        isFavorite = favorite;
-    }
+
 }

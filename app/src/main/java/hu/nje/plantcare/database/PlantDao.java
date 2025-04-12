@@ -17,8 +17,8 @@ public interface PlantDao {
     @Query("DELETE FROM plants")
     void deleteAll();
 
-    @Query("SELECT * FROM plants WHERE isFavorite = 1")
-    List<Plant> getFavoritePlants();  // Lekérdezés a kedvencekhez
+
+
 
     //void setFavorite(int id, boolean isFavorite);
 

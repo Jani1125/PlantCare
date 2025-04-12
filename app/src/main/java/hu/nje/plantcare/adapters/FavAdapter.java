@@ -14,18 +14,21 @@ import hu.nje.plantcare.R;
 import hu.nje.plantcare.database.Plant;
 import hu.nje.plantcare.database.PlantDao;
 
-public class PlantFavAdapter extends RecyclerView.Adapter<PlantFavAdapter.PlantViewHolder> {
+public class FavAdapter extends RecyclerView.Adapter<FavAdapter.PlantViewHolder> {
     private List<Plant> plantList;
     private PlantDao plantDao;  // Adatbázis hozzáférés
 
-    public PlantFavAdapter(List<Plant> plantList, PlantDao plantDao) {
+    public FavAdapter(List<Plant> plantList, PlantDao plantDao) {
         this.plantList = plantList;
         this.plantDao = plantDao;
     }
 
+    public FavAdapter(List<Plant> plantList) {
+    }
+
     @Override
     public PlantViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_plant, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.ownitem, parent, false);
         return new PlantViewHolder(view);
     }
 
@@ -34,22 +37,23 @@ public class PlantFavAdapter extends RecyclerView.Adapter<PlantFavAdapter.PlantV
         Plant plant = plantList.get(position);
         holder.commonName.setText(plant.getCommonName());
         holder.scientificName.setText(plant.getScientificName());
-        holder.type.setText(plant.getType());
-        holder.cycle.setText(plant.getCycle());
-        holder.watering.setText(plant.getWatering());
+
 
         // Kedvenc státusz beállítása
-        if (plant.isFavorite()) {
+        /*if (plant.isFavorite()) {
             holder.favoriteIcon.setImageResource(R.drawable.ic_heart);  // Kedvenc ikont jelenítünk meg
-        }
+        }*/
 
-        // Kedvenc gomb működése
+        /* Kedvenc gomb működése
         holder.favoriteIcon.setOnClickListener(v -> {
-            boolean isFavorite = !plant.isFavorite();
+            boolean isFavorite;
+            isFavorite = !plant.isFavorite();
             plant.setFavorite(isFavorite);
-            //plantDao.setFavorite(plant.getId(), isFavorite);  // Frissítjük az adatbázisban
+            plantDao.setFavorite(plant.getId(), isFavorite);  // Frissítjük az adatbázisban
             notifyItemChanged(position);  // Frissítjük az adaptert
         });
+
+         */
     }
 
     @Override
@@ -58,16 +62,13 @@ public class PlantFavAdapter extends RecyclerView.Adapter<PlantFavAdapter.PlantV
     }
 
     public static class PlantViewHolder extends RecyclerView.ViewHolder {
-        TextView commonName, scientificName, type, cycle, watering;
+        TextView commonName, scientificName;
         ImageView favoriteIcon;
 
         public PlantViewHolder(View itemView) {
             super(itemView);
             commonName = itemView.findViewById(R.id.common_name);
             scientificName = itemView.findViewById(R.id.scientific_name);
-            type = itemView.findViewById(R.id.type);
-            cycle = itemView.findViewById(R.id.cycle);
-            watering = itemView.findViewById(R.id.watering);
             favoriteIcon = itemView.findViewById(R.id.favorite_icon);  // Kedvenc gomb
         }
     }

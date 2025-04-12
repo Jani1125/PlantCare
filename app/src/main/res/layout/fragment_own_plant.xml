@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/mainpic"
-    >
+    tools:ignore="ExtraText">
 
 
     <TextView
@@ -15,34 +15,24 @@
         android:layout_height="wrap_content"
         android:background="@drawable/radius_background"
         android:fontFamily="sans-serif-black"
-        android:text="Favorite plant"
+        android:text="Own plant"
         android:textColor="@color/black"
         android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
+        app:layout_constraintVertical_bias="0.023" />ű
 
     <ImageView
-        android:id="@+id/FavPlantImage"
-        android:layout_width="150dp"
-        android:layout_height="112dp"
-        android:contentDescription="Fav Icon"
-        android:src="@drawable/plantfavpic"
-        tools:ignore="DuplicateIds,MissingConstraints"
-        tools:layout_editor_absoluteX="130dp"
-        tools:layout_editor_absoluteY="747dp" />
-
-    <ImageView
-        android:id="@+id/HeartImage"
-        android:layout_width="68dp"
-        android:layout_height="55dp"
-        android:contentDescription="Heart Icon"
-        android:src="@drawable/ic_heart"
+        android:id="@+id/OwnPlantImage"
+        android:layout_width="135dp"
+        android:layout_height="179dp"
+        android:contentDescription="Alo Icon"
+        android:src="@drawable/alocasiapic"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="104dp" />
+        tools:layout_editor_absoluteX="138dp"
+        tools:layout_editor_absoluteY="707dp" />
 
     <ImageView
         android:id="@+id/profileImageView"
@@ -51,12 +41,12 @@
         android:layout_margin="16dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/circle_background"
+        android:background="@drawable/userpic"
         android:clickable="true"
         android:focusable="true"
         android:padding="2dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/circle_background"
+        android:src="@drawable/userpic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
@@ -87,7 +77,7 @@
         tools:ignore="MissingConstraints" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/favrecyclerView"
+        android:id="@+id/ownplantrecyclerView"
         android:layout_width="318dp"
         android:layout_height="529dp"
         android:layout_marginBottom="192dp"

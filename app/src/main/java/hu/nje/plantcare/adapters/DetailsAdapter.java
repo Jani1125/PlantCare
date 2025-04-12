@@ -12,9 +12,12 @@ import java.util.List;
 import hu.nje.plantcare.R;
 import hu.nje.plantcare.database.Plant;
 
-public class PlantDetailsAdapter extends RecyclerView.Adapter<PlantDetailsAdapter.PlantViewHolder> {
+public class DetailsAdapter extends RecyclerView.Adapter<DetailsAdapter.PlantViewHolder> {
 
     private List<Plant> plants;
+
+    public DetailsAdapter(List<Plant> plantList) {
+    }
 
     public void setPlants(List<Plant> plants) {
         this.plants = plants;
@@ -25,7 +28,7 @@ public class PlantDetailsAdapter extends RecyclerView.Adapter<PlantDetailsAdapte
     @Override
     public PlantViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_plant_detail, parent, false);
+                .inflate(R.layout.detailitem, parent, false);
         return new PlantViewHolder(itemView);
     }
 
@@ -34,6 +37,12 @@ public class PlantDetailsAdapter extends RecyclerView.Adapter<PlantDetailsAdapte
         Plant currentPlant = plants.get(position);
         holder.commonNameTextView.setText(currentPlant.getCommonName());
         holder.scientificNameTextView.setText(currentPlant.getScientificName());
+        holder.typeNameTextView.setText(currentPlant.getType());
+        holder.cycleNameTextView.setText(currentPlant.getCycle());
+        holder.waterNameTextView.setText(currentPlant.getWatering());
+
+
+
     }
 
     @Override
@@ -45,10 +54,22 @@ public class PlantDetailsAdapter extends RecyclerView.Adapter<PlantDetailsAdapte
         private final TextView commonNameTextView;
         private final TextView scientificNameTextView;
 
+        private final  TextView typeNameTextView;
+        private final TextView cycleNameTextView;
+
+        private  final TextView waterNameTextView;
+
+
+
         PlantViewHolder(View itemView) {
             super(itemView);
             commonNameTextView = itemView.findViewById(R.id.common_name);
             scientificNameTextView = itemView.findViewById(R.id.scientific_name);
+            typeNameTextView = itemView.findViewById(R.id.type);
+            cycleNameTextView = itemView.findViewById(R.id.cycle);
+            waterNameTextView=itemView.findViewById(R.id.watering);
+
+
         }
     }
 }

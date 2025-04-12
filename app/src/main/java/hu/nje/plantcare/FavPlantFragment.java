@@ -13,16 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 
-import hu.nje.plantcare.adapters.DetailsAdapter;
+import hu.nje.plantcare.adapters.FavAdapter;
 import hu.nje.plantcare.database.Plant;
 
-public class PlantDetailsFragment extends Fragment {
+public class FavPlantFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private DetailsAdapter adapter;
+    private FavAdapter adapter;
     private List<Plant> plantList;
 
-    public PlantDetailsFragment(List<Plant> plantList) {
+    public FavPlantFragment() {
         this.plantList = plantList;
     }
 
@@ -30,13 +30,13 @@ public class PlantDetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_plantdetails, container, false);
+        View view = inflater.inflate(R.layout.fragment_fav_plant, container, false);
 
-        recyclerView = view.findViewById(R.id.plantdetailsrecyclerView);
+        recyclerView = view.findViewById(R.id.favrecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Adapter beállítása
-        adapter = new DetailsAdapter(plantList);
+        adapter = new FavAdapter(plantList);
         recyclerView.setAdapter(adapter);
 
         return view;
