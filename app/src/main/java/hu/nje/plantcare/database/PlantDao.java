@@ -16,5 +16,13 @@ public interface PlantDao {
 
     @Query("DELETE FROM plants")
     void deleteAll();
+
+
+
+
+    //void setFavorite(int id, boolean isFavorite);
+
+    //@Query("UPDATE plants SET isFavorite = :isFavorite WHERE id = :id")
+    //void setFavorite(int id, boolean isFavorite);  // Módszer a kedvenc beállításához
 }
 

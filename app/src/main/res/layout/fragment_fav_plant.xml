@@ -6,20 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/mainpic"
-    tools:context=".SearchFragment" >
+    >
 
-
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/searchView"
-        android:layout_width="318dp"
-        android:layout_height="54dp"
-        android:layout_marginTop="92dp"
-        android:background="@drawable/radius_background"
-        android:queryHint="Search items"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView8"
@@ -27,7 +15,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/radius_background"
         android:fontFamily="sans-serif-black"
-        android:text="Search"
+        android:text="Favorite plant"
         android:textColor="@color/black"
         android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -37,13 +25,37 @@
         app:layout_constraintVertical_bias="0.023" />
 
     <ImageView
+        android:id="@+id/FavPlantImage"
+        android:layout_width="150dp"
+        android:layout_height="112dp"
+        android:contentDescription="Fav Icon"
+        android:src="@drawable/plantfavpic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/favrecyclerView"
+        tools:ignore="DuplicateIds,MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/HeartImage"
+        android:layout_width="68dp"
+        android:layout_height="55dp"
+        android:contentDescription="Heart Icon"
+        android:src="@drawable/ic_heart"
+        app:layout_constraintBottom_toTopOf="@+id/favrecyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
         android:id="@+id/profileImageView"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_margin="16dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/circle_background"
+        android:background="@drawable/userpic"
         android:clickable="true"
         android:focusable="true"
         android:padding="2dp"
@@ -52,19 +64,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
-
-    <ImageView
-        android:id="@+id/FavPlantImage"
-        android:layout_width="150dp"
-        android:layout_height="112dp"
-        android:contentDescription="Fav Icon"
-        android:src="@drawable/searchicon"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView"
-        tools:ignore="DuplicateIds,MissingConstraints" />
-        app:layout_constraintTop_toTopOf="parent" />
 
 
     <ImageView
@@ -90,18 +89,18 @@
         android:visibility="gone"
         android:layout_marginTop="50dp"
         tools:ignore="MissingConstraints"
-        android:elevation="10dp"/>
+        android:elevation="10dp"
+       />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/favrecyclerView"
         android:layout_width="318dp"
         android:layout_height="529dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="192dp"
         android:background="@drawable/radius_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchView"
-        app:layout_constraintVertical_bias="0.0"
         tools:ignore="SpeakableTextPresentCheck" />
 </androidx.constraintlayout.widget.ConstraintLayout>

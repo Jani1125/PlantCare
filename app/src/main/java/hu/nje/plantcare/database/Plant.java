@@ -13,14 +13,19 @@ public class Plant {
     public String cycle;
     public String watering;
 
+
     public Plant(String commonName, String scientificName, String type, String cycle, String watering) {
         this.commonName = commonName;
         this.scientificName = scientificName;
         this.type = type;
         this.cycle = cycle;
         this.watering = watering;
+
     }
 
+
+
+    // Getterek és setterek
     public int getId() {
         return id;
     }
@@ -65,8 +70,15 @@ public class Plant {
         return watering;
     }
 
-    public void setWatering(String watering) {
-        this.watering = watering;
-    }
-}
 
+
+
+    public void setFavorite(boolean isFavorite) {
+    }
+
+    public boolean isFavorite() {
+        return false;
+    }
+
+
+}
