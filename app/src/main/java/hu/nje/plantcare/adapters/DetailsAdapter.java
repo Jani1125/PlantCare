@@ -17,6 +17,7 @@ public class DetailsAdapter extends RecyclerView.Adapter<DetailsAdapter.PlantVie
     private List<Plant> plants;
 
     public DetailsAdapter(List<Plant> plantList) {
+        this.plants=plantList;
     }
 
     public void setPlants(List<Plant> plants) {

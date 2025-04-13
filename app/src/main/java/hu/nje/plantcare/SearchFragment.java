@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,7 +31,9 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.List;
 
+import hu.nje.plantcare.adapters.DetailsAdapter;
 import hu.nje.plantcare.adapters.MenuAdapter;
+import hu.nje.plantcare.api.ApiService;
 import hu.nje.plantcare.database.*;
 
 public class SearchFragment extends Fragment {
@@ -52,6 +55,10 @@ public class SearchFragment extends Fragment {
         // Required empty public constructor
     }
 
+    private RecyclerView recyclerView;
+    private DetailsAdapter adapter;
+    private List<Plant> plantList = new ArrayList<>();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +78,25 @@ public class SearchFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
+        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new DetailsAdapter(plantList);
+        recyclerView.setAdapter(adapter);
+
+        SearchView searchView = view.findViewById(R.id.searchView);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                performSearch(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // Opcionális: valós idejű keresés
+                return false;
+            }
+        });
         menuRecyclerView = view.findViewById(R.id.menuRecyclerView);
         menuRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -153,6 +179,15 @@ public class SearchFragment extends Fragment {
 
         return view;
     }
+
+    private void performSearch(String keyword) {
+        ApiService.SearchApiRequest(requireContext(), keyword, API_KEY, "https://perenual.com/api/v2/species-list?", results -> {
+            plantList.clear();
+            plantList.addAll(results);
+            adapter.setPlants(plantList);
+        });
+    }
+
 
     // Kijelentkezés logika
     private void signOut() {
