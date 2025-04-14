@@ -27,6 +27,7 @@ import java.util.List;
 
 import hu.nje.plantcare.adapters.MenuAdapter;
 import hu.nje.plantcare.ui.FavPlantFragment;
+import hu.nje.plantcare.ui.MenuManager;
 import hu.nje.plantcare.ui.OwnPlantFragment;
 import hu.nje.plantcare.ui.SearchFragment;
 import hu.nje.plantcare.ui.SettingsFragment;
@@ -62,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Menüelemek inicializálása
         menuItems = new ArrayList<>();
         menuItems.add("Home");
         menuItems.add("Search");
@@ -71,104 +71,15 @@ public class MainActivity extends AppCompatActivity {
         menuItems.add("Plant scanner");
         menuItems.add("Settings");
 
-        // RecyclerView beállítása
-        menuRecyclerView = findViewById(R.id.menuRecyclerView);
-        menuRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Menü adapter beállítása
-        menuAdapter = new MenuAdapter(this, menuItems, item -> {
-            if ("Home".equals(item)) {
-                // MainActivity indítása újra
-                Intent intent = new Intent(MainActivity.this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            } else if ("Search".equals(item)) {
-                // Search fragment betöltése
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new SearchFragment())
-                        .addToBackStack(null)
-                        .commit();
-            } else if ("Favourite plants".equals(item)) {
-                // Favourite plants fragment betöltése
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new FavPlantFragment())
-                        .addToBackStack(null)
-                        .commit();
-            } else if ("Own plants".equals(item)) {
-            // Own plants fragment betöltése
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new OwnPlantFragment())
-                    .addToBackStack(null)
-                    .commit();
-            } /*else if ("Plant scanner".equals(item)) {
-                // Plant scanner fragment betöltése
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new PlantScannerFragment())
-                        .addToBackStack(null)
-                        .commit();
-            }*/ else if ("Settings".equals(item)) {
-                // Settings fragment betöltése
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new SettingsFragment())
-                        .addToBackStack(null)
-                        .commit();
-            }
-            menuRecyclerView.setVisibility(View.GONE);  // Menüpontok elrejtése
-        });
-
-        // RecyclerView adapter beállítása
-        menuRecyclerView.setAdapter(menuAdapter);
-
-        // Hamburger menü ikon kattintás kezelése
-        ImageView hamMenuIcon = findViewById(R.id.hamMenuIcon);
-        hamMenuIcon.setOnClickListener(v -> {
-            if (menuRecyclerView.getVisibility() == View.GONE) {
-                menuRecyclerView.setVisibility(View.VISIBLE);
-            } else {
-                menuRecyclerView.setVisibility(View.GONE);
-            }
-        });
+        MenuManager.setupMenu(
+                this,
+                menuItems,
+                findViewById(R.id.menuRecyclerView),
+                findViewById(R.id.hamMenuIcon),
+                findViewById(R.id.profileImageView)
+        );
 
 
-        profileImageView = findViewById(R.id.profileImageView);
-
-        // 🔄 Profilkép betöltése
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        if (account != null && account.getPhotoUrl() != null) {
-            Uri photoUri = account.getPhotoUrl();
-            Glide.with(this)
-                    .load(photoUri)
-                    .circleCrop()
-                    .into(profileImageView);
-        }
-
-        // 👆 Kattintásra menü
-        profileImageView.setOnClickListener(view -> {
-            PopupMenu popup = new PopupMenu(MainActivity.this, view);
-            popup.getMenuInflater().inflate(R.menu.profile_menu, popup.getMenu());
-            popup.setOnMenuItemClickListener(item -> {
-                if (item.getItemId() == R.id.menu_sign_out) {
-                    signOut();
-                    return true;
-                }
-                return false;
-            });
-            popup.show();
-        });
     }
-
-    // 🚪 Kijelentkezés logika
-    private void signOut() {
-        FirebaseAuth.getInstance().signOut();
-
-        GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(this,
-                new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build());
-
-        googleSignInClient.signOut().addOnCompleteListener(this, task -> {
-            Intent intent = new Intent(this, SplashActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            finish(); // lezárja a jelenlegi Activity-t
-        });
-    }  
 }
