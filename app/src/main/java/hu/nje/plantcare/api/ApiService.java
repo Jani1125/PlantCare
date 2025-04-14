@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import hu.nje.plantcare.database.Plant;
 import hu.nje.plantcare.database.PlantDao;
@@ -43,9 +44,17 @@ public class ApiService {
                         String cycle = species.optString("cycle", "N/A");
                         String watering = species.optString("watering", "N/A");
 
+                        JSONArray imgUrls = species.optJSONArray("default_image");
+                        String imgUrl = (imgUrls != null && imgUrls.length()>0)
+                                ? imgUrls.getString(6):"N/A";
+
+                        String description = species.optString("description","N/A");
+
+                        boolean isFavorite = false;
+
                         // Az adatokat egy új szálban mentjük el az adatbázisba
                         new Thread(() -> {
-                            plantDao.insert(new Plant(commonName, scientificName, type, cycle, watering));
+                            plantDao.insert(new Plant(commonName, scientificName, type, cycle, watering,imgUrl,description,isFavorite));
                         }).start();
 
                     } catch (Exception e) {
@@ -78,13 +87,25 @@ public class ApiService {
                             JSONObject species = dataArray.getJSONObject(i);
 
                             String commonName = species.optString("common_name", "N/A");
+
                             JSONArray scientificNamesArray = species.optJSONArray("scientific_name");
                             String scientificName = (scientificNamesArray != null && scientificNamesArray.length() > 0)
                                     ? scientificNamesArray.getString(0) : "N/A";
 
-                            System.out.println(commonName + " " + scientificName);
+                            String type = species.optString("type", "N/A");
+                            String cycle = species.optString("cycle", "N/A");
+                            String watering = species.optString("watering", "N/A");
 
-                            results.add(new Plant(commonName, scientificName, null, null, null));
+                            JSONArray imgUrls = species.optJSONArray("default_image");
+                            String imgUrl = (imgUrls != null && imgUrls.length()>0)
+                                    ? imgUrls.getString(6):"N/A";
+
+                            String description = species.optString("description","N/A");
+
+                            boolean isFavorite = false;
+                            //System.out.println(commonName + " " + scientificName);
+
+                            results.add(new Plant(commonName, scientificName, type, cycle, watering,imgUrl,description,isFavorite));
                         }
 
                         // Hívjuk meg a callback-et az eredményekkel

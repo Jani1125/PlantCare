@@ -1,4 +1,4 @@
-package hu.nje.plantcare;
+package hu.nje.plantcare.ui;
 
 import java.util.ArrayList;
 import java.util.List;

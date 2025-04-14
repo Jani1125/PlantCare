@@ -29,7 +29,7 @@ public class DetailsAdapter extends RecyclerView.Adapter<DetailsAdapter.PlantVie
     @Override
     public PlantViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.detailitem, parent, false);
+                .inflate(R.layout.detail_item, parent, false);
         return new PlantViewHolder(itemView);
     }
 

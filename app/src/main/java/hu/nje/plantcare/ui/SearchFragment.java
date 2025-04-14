@@ -1,4 +1,4 @@
-package hu.nje.plantcare;
+package hu.nje.plantcare.ui;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -16,9 +16,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.Request;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -26,11 +23,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 
-import org.json.JSONArray;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import hu.nje.plantcare.MainActivity;
+import hu.nje.plantcare.R;
+import hu.nje.plantcare.SplashActivity;
 import hu.nje.plantcare.adapters.DetailsAdapter;
 import hu.nje.plantcare.adapters.MenuAdapter;
 import hu.nje.plantcare.api.ApiService;
@@ -83,11 +81,16 @@ public class SearchFragment extends Fragment {
         adapter = new DetailsAdapter(plantList);
         recyclerView.setAdapter(adapter);
 
+
+        /// ///////////////////////////////////////////////////////////////////////////////////
+        //Setting up the keyword searching field
+        //This search field based on searching with keyword with an api call, and shows the result
+
         SearchView searchView = view.findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                performSearch(query);
+                searchWithApi(query);
                 return true;
             }
 
@@ -97,6 +100,10 @@ public class SearchFragment extends Fragment {
                 return false;
             }
         });
+
+
+        /// ///////////////////////////////////////////////////////////////////////////////////////
+
         menuRecyclerView = view.findViewById(R.id.menuRecyclerView);
         menuRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -180,14 +187,16 @@ public class SearchFragment extends Fragment {
         return view;
     }
 
-    private void performSearch(String keyword) {
+    /// ///////////////////////////////////////////////////////////
+    /// This function create an api call with a keyword, based on what word the user write in.
+    private void searchWithApi(String keyword) {
         ApiService.SearchApiRequest(requireContext(), keyword, API_KEY, "https://perenual.com/api/v2/species-list?", results -> {
             plantList.clear();
             plantList.addAll(results);
             adapter.setPlants(plantList);
         });
     }
-
+    /// ////////////////////////////////////////////////////////////
 
     // Kijelentkezés logika
     private void signOut() {
