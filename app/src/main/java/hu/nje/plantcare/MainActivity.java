@@ -9,17 +9,12 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
-import androidx.appcompat.widget.Toolbar;
-import android.view.View;
-import android.widget.Toast;
 
-import androidx.cardview.widget.CardView;
+import android.view.View;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.Request;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -27,13 +22,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 
-import org.json.JSONArray;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import hu.nje.plantcare.adapters.MenuAdapter;
-import hu.nje.plantcare.database.*;
+import hu.nje.plantcare.ui.FavPlantFragment;
+import hu.nje.plantcare.ui.OwnPlantFragment;
+import hu.nje.plantcare.ui.SearchFragment;
+import hu.nje.plantcare.ui.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity {
 

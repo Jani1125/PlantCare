@@ -1,4 +1,4 @@
-package hu.nje.plantcare;
+package hu.nje.plantcare.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +19,9 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+
+import hu.nje.plantcare.MainActivity;
+import hu.nje.plantcare.R;
 
 public class GoogleSignInFragment extends Fragment {
 

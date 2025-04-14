@@ -1,4 +1,4 @@
-package hu.nje.plantcare;
+package hu.nje.plantcare.ui;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -24,6 +24,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 import java.util.List;
 
+import hu.nje.plantcare.MainActivity;
+import hu.nje.plantcare.R;
+import hu.nje.plantcare.SplashActivity;
 import hu.nje.plantcare.adapters.MenuAdapter;
 
 public class OwnPlantFragment extends Fragment {

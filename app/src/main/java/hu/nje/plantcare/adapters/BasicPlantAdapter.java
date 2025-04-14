@@ -3,23 +3,29 @@ package hu.nje.plantcare.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import hu.nje.plantcare.R;
-import hu.nje.plantcare.database.Plant;
+import hu.nje.plantcare.database.entity.BasicPlant;
+import hu.nje.plantcare.database.entity.Plant;
 
-public class DetailsAdapter extends RecyclerView.Adapter<DetailsAdapter.PlantViewHolder> {
+public class BasicPlantAdapter extends RecyclerView.Adapter<BasicPlantAdapter.PlantViewHolder> {
 
-    private List<Plant> plants;
+    private List<BasicPlant> plants;
 
-    public DetailsAdapter(List<Plant> plantList) {
+    public BasicPlantAdapter(List<BasicPlant> plantList) {
+        this.plants=plantList;
     }
 
-    public void setPlants(List<Plant> plants) {
+    public void setPlants(List<BasicPlant> plants) {
         this.plants = plants;
         notifyDataSetChanged();
     }
@@ -28,19 +34,21 @@ public class DetailsAdapter extends RecyclerView.Adapter<DetailsAdapter.PlantVie
     @Override
     public PlantViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.detailitem, parent, false);
+                .inflate(R.layout.searched_item, parent, false);
         return new PlantViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull PlantViewHolder holder, int position) {
-        Plant currentPlant = plants.get(position);
-        holder.commonNameTextView.setText(currentPlant.getCommonName());
-        holder.scientificNameTextView.setText(currentPlant.getScientificName());
-        holder.typeNameTextView.setText(currentPlant.getType());
-        holder.cycleNameTextView.setText(currentPlant.getCycle());
-        holder.waterNameTextView.setText(currentPlant.getWatering());
+        BasicPlant currentPlant = plants.get(position);
+        holder.commonNameTextView.setText(currentPlant.getCommon_name());
+        holder.scientificNameTextView.setText(currentPlant.getScientific_name());
 
+        Glide.with(holder.itemView.getContext())
+                .load(currentPlant.getImgUrl()) // <-- Ez az URL-ed
+                //.placeholder(R.drawable.placeholder) // opcionális betöltés közbeni kép
+                //.error(R.drawable.error_image)       // opcionális hiba esetén
+                .into(holder.plantImage);
 
 
     }
@@ -50,14 +58,13 @@ public class DetailsAdapter extends RecyclerView.Adapter<DetailsAdapter.PlantVie
         return plants == null ? 0 : plants.size();
     }
 
+
     static class PlantViewHolder extends RecyclerView.ViewHolder {
         private final TextView commonNameTextView;
         private final TextView scientificNameTextView;
 
-        private final  TextView typeNameTextView;
-        private final TextView cycleNameTextView;
+        private final ImageView plantImage;
 
-        private  final TextView waterNameTextView;
 
 
 
@@ -65,9 +72,8 @@ public class DetailsAdapter extends RecyclerView.Adapter<DetailsAdapter.PlantVie
             super(itemView);
             commonNameTextView = itemView.findViewById(R.id.common_name);
             scientificNameTextView = itemView.findViewById(R.id.scientific_name);
-            typeNameTextView = itemView.findViewById(R.id.type);
-            cycleNameTextView = itemView.findViewById(R.id.cycle);
-            waterNameTextView=itemView.findViewById(R.id.watering);
+            plantImage=itemView.findViewById(R.id.plant_image);
+
 
 
         }

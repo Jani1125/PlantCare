@@ -1,4 +1,4 @@
-package hu.nje.plantcare.database;
+package hu.nje.plantcare.database.entity;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -12,14 +12,21 @@ public class Plant {
     public String type;
     public String cycle;
     public String watering;
+    public String imgUrl;
+    public String description;
+    public boolean isFavorite;
 
 
-    public Plant(String commonName, String scientificName, String type, String cycle, String watering) {
+
+    public Plant(String commonName, String scientificName, String type, String cycle, String watering, String imgUrl,String description, boolean isFavorite) {
         this.commonName = commonName;
         this.scientificName = scientificName;
         this.type = type;
         this.cycle = cycle;
         this.watering = watering;
+        this.imgUrl = imgUrl;
+        this.description = description;
+        this.isFavorite=isFavorite;
 
     }
 
@@ -70,15 +77,31 @@ public class Plant {
         return watering;
     }
 
+    public void setWatering(String watering) {
+        this.watering = watering;
+    }
 
+    public String getImgUrl() {
+        return imgUrl;
+    }
 
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
 
-    public void setFavorite(boolean isFavorite) {
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public boolean isFavorite() {
-        return false;
+        return isFavorite;
     }
 
-
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
+    }
 }
