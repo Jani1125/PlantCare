@@ -29,10 +29,11 @@ import java.util.List;
 import hu.nje.plantcare.MainActivity;
 import hu.nje.plantcare.R;
 import hu.nje.plantcare.SplashActivity;
-import hu.nje.plantcare.adapters.DetailsAdapter;
+import hu.nje.plantcare.adapters.BasicPlantAdapter;
 import hu.nje.plantcare.adapters.MenuAdapter;
 import hu.nje.plantcare.api.ApiService;
-import hu.nje.plantcare.database.*;
+import hu.nje.plantcare.database.entity.BasicPlant;
+import hu.nje.plantcare.database.entity.Plant;
 
 public class SearchFragment extends Fragment {
 
@@ -54,8 +55,8 @@ public class SearchFragment extends Fragment {
     }
 
     private RecyclerView recyclerView;
-    private DetailsAdapter adapter;
-    private List<Plant> plantList = new ArrayList<>();
+    private BasicPlantAdapter adapter;
+    private List<BasicPlant> plantList = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,7 +79,7 @@ public class SearchFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new DetailsAdapter(plantList);
+        adapter = new BasicPlantAdapter(plantList);
         recyclerView.setAdapter(adapter);
 
 

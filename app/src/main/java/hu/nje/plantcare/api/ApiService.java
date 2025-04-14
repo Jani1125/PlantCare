@@ -9,9 +9,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import hu.nje.plantcare.database.Plant;
+import hu.nje.plantcare.database.entity.BasicPlant;
+import hu.nje.plantcare.database.entity.Plant;
 import hu.nje.plantcare.database.PlantDao;
 import hu.nje.plantcare.database.PlantDatabase;
 
@@ -72,12 +72,12 @@ public class ApiService {
     }
 
     public interface SearchResultCallback {
-        void onResult(List<Plant> results);
+        void onResult(List<BasicPlant> results);
     }
 
     public static void SearchApiRequest(Context context, String keyword, String API_KEY, String baseURL, SearchResultCallback callback) {
         String search_url = baseURL + "key=" + API_KEY + "&q=" + keyword;
-        List<Plant> results = new ArrayList<>();
+        List<BasicPlant> results = new ArrayList<>();
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, search_url, null,
                 response -> {  // Ha sikeres a kérés
@@ -86,26 +86,42 @@ public class ApiService {
                         for (int i = 0; i < dataArray.length(); i++) {
                             JSONObject species = dataArray.getJSONObject(i);
 
+                            int id = Integer.parseInt(species.optString("id",null));
+                            System.out.println(id);
+
                             String commonName = species.optString("common_name", "N/A");
+                            System.out.println(commonName);
+
 
                             JSONArray scientificNamesArray = species.optJSONArray("scientific_name");
+
+
                             String scientificName = (scientificNamesArray != null && scientificNamesArray.length() > 0)
                                     ? scientificNamesArray.getString(0) : "N/A";
+                            System.out.println(scientificName);
 
-                            String type = species.optString("type", "N/A");
-                            String cycle = species.optString("cycle", "N/A");
-                            String watering = species.optString("watering", "N/A");
+                            //azért dob hibát, mert ha null értéket vesz fel az img érték, nem tudja se objectként se array-ként értelmezni
+                            JSONObject imgUrls = species.optJSONObject("default_image");
+                            JSONArray arrayImgs = species.optJSONArray("default_image");
+                            System.out.println("Object --> "+imgUrls);
+                            System.out.println("Array --> "+imgUrls);
 
-                            JSONArray imgUrls = species.optJSONArray("default_image");
-                            String imgUrl = (imgUrls != null && imgUrls.length()>0)
-                                    ? imgUrls.getString(6):"N/A";
 
-                            String description = species.optString("description","N/A");
 
-                            boolean isFavorite = false;
-                            //System.out.println(commonName + " " + scientificName);
+                            String imgUrl = imgUrls.optString("small_url","N/A");
 
-                            results.add(new Plant(commonName, scientificName, type, cycle, watering,imgUrl,description,isFavorite));
+
+
+                            System.out.println("EZ itt a kép urlje: --> ("+imgUrl+") <--");
+                            if(!imgUrl.equals("null"))
+                            {
+                                if(!imgUrl.equals("https://perenual.com/storage/image/upgrade_access.jpg"))
+                                {
+                                    results.add(new BasicPlant(id,commonName, scientificName,imgUrl));
+                                }
+                            }
+
+
                         }
 
                         // Hívjuk meg a callback-et az eredményekkel
@@ -113,6 +129,7 @@ public class ApiService {
 
                     } catch (Exception e) {
                         System.out.println("Hiba a JSON feldolgozásakor");
+                        System.out.println(e.getMessage());
                         e.printStackTrace();
                     }
                 },

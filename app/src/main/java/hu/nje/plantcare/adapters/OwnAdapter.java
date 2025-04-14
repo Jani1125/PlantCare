@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import hu.nje.plantcare.R;
-import hu.nje.plantcare.database.Plant;
+import hu.nje.plantcare.database.entity.Plant;
 
 public class OwnAdapter extends RecyclerView.Adapter<OwnAdapter.PlantViewHolder> {
 

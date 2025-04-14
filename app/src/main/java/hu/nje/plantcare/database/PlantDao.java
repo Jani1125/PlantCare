@@ -6,6 +6,8 @@ import androidx.room.Query;
 
 import java.util.List;
 
+import hu.nje.plantcare.database.entity.Plant;
+
 @Dao
 public interface PlantDao {
     @Insert

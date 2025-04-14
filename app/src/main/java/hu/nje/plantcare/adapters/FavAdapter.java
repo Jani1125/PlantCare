@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import hu.nje.plantcare.R;
-import hu.nje.plantcare.database.Plant;
+import hu.nje.plantcare.database.entity.Plant;
 import hu.nje.plantcare.database.PlantDao;
 
 public class FavAdapter extends RecyclerView.Adapter<FavAdapter.PlantViewHolder> {

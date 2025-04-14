@@ -1,4 +1,4 @@
-package hu.nje.plantcare.database;
+package hu.nje.plantcare.database.entity;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

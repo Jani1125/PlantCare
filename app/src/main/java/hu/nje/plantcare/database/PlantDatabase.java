@@ -6,6 +6,8 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import hu.nje.plantcare.database.entity.Plant;
+
 // **Room adatbázis osztály deklarálása**
 @Database(entities = {Plant.class}, version = 1)
 public abstract class PlantDatabase extends RoomDatabase {
