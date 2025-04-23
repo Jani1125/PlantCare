@@ -5,6 +5,7 @@ import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -23,13 +24,15 @@ public class ApiService {
     private static final String detailsUrl = "https://perenual.com/api/v2/species/details/";
 
 
-    public static void ApiRequest(Context context, int id, String apiKey) {
+    public static void ApiRequest(Context context, int id, String apiKey,DetailResultCallBack callback) {
         // Az API URL összeállítása a kapott ID és API kulcs alapján
         String species_url = detailsUrl + id + "?key=" + apiKey;
 
         // Adatbázis elérése
+        /*
         PlantDatabase db = PlantDatabase.getDatabase(context);
         PlantDao plantDao = db.plantDao();
+        */
 
         // API kérés indítása Volley-val
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, species_url, null,
@@ -44,19 +47,26 @@ public class ApiService {
                         String cycle = species.optString("cycle", "N/A");
                         String watering = species.optString("watering", "N/A");
 
-                        JSONArray imgUrls = species.optJSONArray("default_image");
-                        String imgUrl = (imgUrls != null && imgUrls.length()>0)
-                                ? imgUrls.getString(6):"N/A";
+                        String imgUrl;
+
+                        JSONObject imgUrls = species.optJSONObject("default_image");
+                        imgUrl=imgUrls.optString("small_url");
+
+
 
                         String description = species.optString("description","N/A");
 
                         boolean isFavorite = false;
 
+                        Plant plant = new Plant(commonName,scientificName,type,cycle,watering,imgUrl,description,isFavorite);
+                        /*
                         // Az adatokat egy új szálban mentjük el az adatbázisba
                         new Thread(() -> {
                             plantDao.insert(new Plant(commonName, scientificName, type, cycle, watering,imgUrl,description,isFavorite));
                         }).start();
+                        */
 
+                        callback.onResult(plant);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -69,8 +79,12 @@ public class ApiService {
 
         // Az API kérést hozzáadjuk a Volley kérési sorához
         Volley.newRequestQueue(context).add(request);
-    }
 
+        System.out.println("Megtörtént az API hívás");
+    }
+    public interface DetailResultCallBack{
+        void onResult(Plant result);
+    }
     public interface SearchResultCallback {
         void onResult(List<BasicPlant> results);
     }
@@ -100,20 +114,20 @@ public class ApiService {
                                     ? scientificNamesArray.getString(0) : "N/A";
                             System.out.println(scientificName);
 
-                            //azért dob hibát, mert ha null értéket vesz fel az img érték, nem tudja se objectként se array-ként értelmezni
-                            JSONObject imgUrls = species.optJSONObject("default_image");
-                            JSONArray arrayImgs = species.optJSONArray("default_image");
-                            System.out.println("Object --> "+imgUrls);
-                            System.out.println("Array --> "+imgUrls);
 
+                            String imgUrl;
+                            try {
+                                JSONObject imgUrls = species.optJSONObject("default_image");
+                                imgUrl=imgUrls.optString("small_url");
+                            }catch (Exception jsonError)
+                            {
+                                imgUrl="no_image";
+                            }
 
-
-                            String imgUrl = imgUrls.optString("small_url","N/A");
-
-
+                            //imgUrl = imgUrls.optString("small_url","N/A");
 
                             System.out.println("EZ itt a kép urlje: --> ("+imgUrl+") <--");
-                            if(!imgUrl.equals("null"))
+                            if(!imgUrl.equals("no_image"))
                             {
                                 if(!imgUrl.equals("https://perenual.com/storage/image/upgrade_access.jpg"))
                                 {

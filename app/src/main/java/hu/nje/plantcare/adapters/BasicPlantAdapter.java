@@ -20,9 +20,11 @@ import hu.nje.plantcare.database.entity.Plant;
 public class BasicPlantAdapter extends RecyclerView.Adapter<BasicPlantAdapter.PlantViewHolder> {
 
     private List<BasicPlant> plants;
+    private OnPlantClickListener listener;  // Add listener to handle item clicks
 
-    public BasicPlantAdapter(List<BasicPlant> plantList) {
+    public BasicPlantAdapter(List<BasicPlant> plantList, OnPlantClickListener listener) {
         this.plants=plantList;
+        this.listener=listener;
     }
 
     public void setPlants(List<BasicPlant> plants) {
@@ -50,7 +52,11 @@ public class BasicPlantAdapter extends RecyclerView.Adapter<BasicPlantAdapter.Pl
                 //.error(R.drawable.error_image)       // opcionális hiba esetén
                 .into(holder.plantImage);
 
-
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onPlantClick(currentPlant.getId());  // Pass the plant ID on click
+            }
+        });
     }
 
     @Override
@@ -59,7 +65,7 @@ public class BasicPlantAdapter extends RecyclerView.Adapter<BasicPlantAdapter.Pl
     }
 
 
-    static class PlantViewHolder extends RecyclerView.ViewHolder {
+    public static class PlantViewHolder extends RecyclerView.ViewHolder {
         private final TextView commonNameTextView;
         private final TextView scientificNameTextView;
 
@@ -78,4 +84,11 @@ public class BasicPlantAdapter extends RecyclerView.Adapter<BasicPlantAdapter.Pl
 
         }
     }
+
+    // Custom listener interface to handle item clicks
+    public interface OnPlantClickListener {
+        void onPlantClick(int plantId);  // Callback method that gets triggered on item click
+    }
+
+
 }

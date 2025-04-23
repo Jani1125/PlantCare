@@ -1,0 +1,90 @@
+package hu.nje.plantcare.adapters;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+
+import hu.nje.plantcare.R;
+import hu.nje.plantcare.database.entity.Plant;
+
+public class PlantDetailAdapter extends RecyclerView.Adapter<PlantDetailAdapter.PlantViewHolder>
+{
+
+    private Plant plant;
+
+    public PlantDetailAdapter(Plant plant)
+    {
+        this.plant = plant;
+    }
+
+    public void setPlant(Plant plant)
+    {
+        this.plant = plant;
+    }
+
+    @NonNull
+    @Override
+    public PlantViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    {
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.searched_item_details, parent, false);
+        return new PlantViewHolder(itemView);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull PlantViewHolder holder, int position) {
+
+        Glide.with(holder.itemView.getContext())
+                .load(plant.getImgUrl()) // <-- Ez az URL-ed
+                //.placeholder(R.drawable.placeholder) // opcionális betöltés közbeni kép
+                //.error(R.drawable.error_image)       // opcionális hiba esetén
+                .into(holder.plantImage);
+
+        holder.commonNameTextView.setText(plant.getCommonName());
+        holder.scientificNameTextView.setText(plant.getScientificName());
+        holder.typeTextView.setText(plant.type);
+        holder.cycleTextView.setText(plant.cycle);
+        holder.wateringTextView.setText(plant.watering);
+        holder.descriptionTextView.setText(plant.description);
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return plant == null ? 0 : 1;
+    }
+
+
+    public static class PlantViewHolder extends RecyclerView.ViewHolder
+    {
+        private final ImageView plantImage;
+        private final TextView commonNameTextView;
+        private final TextView scientificNameTextView;
+        private final TextView typeTextView;
+        private final TextView cycleTextView;
+        private final TextView wateringTextView;
+        private final TextView descriptionTextView;
+
+        PlantViewHolder(View itemView)
+        {
+
+            super(itemView);
+            plantImage = itemView.findViewById(R.id.plant_image);
+            commonNameTextView = itemView.findViewById(R.id.common_name);
+            scientificNameTextView = itemView.findViewById(R.id.scientific_name);
+            typeTextView = itemView.findViewById(R.id.type);
+            cycleTextView = itemView.findViewById(R.id.cycle);
+            wateringTextView = itemView.findViewById(R.id.watering);
+            descriptionTextView = itemView.findViewById(R.id.description);
+
+        }
+    }
+
+}

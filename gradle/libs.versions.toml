@@ -11,6 +11,7 @@ constraintlayout = "2.2.1"
 firebaseInappmessaging = "21.0.2"
 preference = "1.2.0"
 volley = "1.2.1"
+core = "1.16.0"
 
 [libraries]
 google-services = { module = "com.google.gms:google-services", version.ref = "googleServices" }
@@ -24,6 +25,7 @@ constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayo
 firebase-inappmessaging = { group = "com.google.firebase", name = "firebase-inappmessaging", version.ref = "firebaseInappmessaging" }
 preference = { group = "androidx.preference", name = "preference", version.ref = "preference" }
 volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
+core = { group = "androidx.core", name = "core", version.ref = "core" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

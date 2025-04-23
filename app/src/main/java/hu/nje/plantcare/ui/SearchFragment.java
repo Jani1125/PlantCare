@@ -3,6 +3,7 @@ package hu.nje.plantcare.ui;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ import hu.nje.plantcare.R;
 import hu.nje.plantcare.SplashActivity;
 import hu.nje.plantcare.adapters.BasicPlantAdapter;
 import hu.nje.plantcare.adapters.MenuAdapter;
+import hu.nje.plantcare.adapters.PlantDetailAdapter;
 import hu.nje.plantcare.api.ApiService;
 import hu.nje.plantcare.database.entity.BasicPlant;
 import hu.nje.plantcare.database.entity.Plant;
@@ -55,8 +57,13 @@ public class SearchFragment extends Fragment {
     }
 
     private RecyclerView recyclerView;
-    private BasicPlantAdapter adapter;
+
+    private BasicPlantAdapter basic_adapter;
     private List<BasicPlant> plantList = new ArrayList<>();
+
+    private PlantDetailAdapter detail_adapter;
+    private Plant plant;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,19 +86,28 @@ public class SearchFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new BasicPlantAdapter(plantList);
-        recyclerView.setAdapter(adapter);
+        basic_adapter = new BasicPlantAdapter(plantList, new BasicPlantAdapter.OnPlantClickListener() {
+            @Override
+            public void onPlantClick(int plantId) {
+                //Log.d("SearchFragment", "Clicked plant ID: " + plantId);
+                getDetailsWithApi(plantId);
+            }
+        });
+        recyclerView.setAdapter(basic_adapter);
 
 
         /// ///////////////////////////////////////////////////////////////////////////////////
-        //Setting up the keyword searching field
-        //This search field based on searching with keyword with an api call, and shows the result
+        /// Setting up the keyword searching field
+        ///This search field based on searching with keyword with an api call, and shows the result
 
         SearchView searchView = view.findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                searchWithApi(query);
+                if(!query.isEmpty())
+                {
+                    searchWithApi(query);
+                }
                 return true;
             }
 
@@ -194,10 +210,27 @@ public class SearchFragment extends Fragment {
         ApiService.SearchApiRequest(requireContext(), keyword, API_KEY, "https://perenual.com/api/v2/species-list?", results -> {
             plantList.clear();
             plantList.addAll(results);
-            adapter.setPlants(plantList);
+            basic_adapter.setPlants(plantList);
+
         });
     }
     /// ////////////////////////////////////////////////////////////
+    /// This function will make the details of the selected item
+    ///
+
+    private void getDetailsWithApi(int selectedItemIndex)
+    {
+
+        System.out.println("Meg lett hívva a getDetailsWithApi függvény");
+
+        ApiService.ApiRequest(requireContext(),selectedItemIndex,API_KEY,result ->{
+            detail_adapter = new PlantDetailAdapter(result);
+            detail_adapter.setPlant(result);
+            recyclerView.setAdapter(detail_adapter);
+        });
+    }
+
+    /// ////////////////////////////////////////////////////////////////
 
     // Kijelentkezés logika
     private void signOut() {
@@ -212,4 +245,5 @@ public class SearchFragment extends Fragment {
             getActivity().finish();
         });
     }
+
 }
