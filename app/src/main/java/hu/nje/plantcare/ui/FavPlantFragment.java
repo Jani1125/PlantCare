@@ -33,6 +33,7 @@ public class FavPlantFragment extends Fragment {
         menuItems.add("Own plants");
         menuItems.add("Plant scanner");
         menuItems.add("Settings");
+        menuItems.add("Notifications");
     }
 
     @Override

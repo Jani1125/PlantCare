@@ -59,7 +59,13 @@ public class MenuManager {
                         .replace(R.id.fragment_container, new SettingsFragment())
                         .addToBackStack(null)
                         .commit();
-            }
+            } else if ("Notifications".equals(item)) {
+            activity.getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new MessagesFragment())
+                    .addToBackStack(null)
+                    .commit();
+        }
+
             //Plant scanne maid ide
             menuRecyclerView.setVisibility(View.GONE);
         });

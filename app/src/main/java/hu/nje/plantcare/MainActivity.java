@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Az adatok tárolására használt StringBuilder
     StringBuilder details = new StringBuilder();
+    private static boolean hasPopupBeenShown = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +72,12 @@ public class MainActivity extends AppCompatActivity {
         menuItems.add("Own plants");
         menuItems.add("Plant scanner");
         menuItems.add("Settings");
+        menuItems.add("Notifications");
+
+        if (!hasPopupBeenShown) {
+            showWaterReminderPopup();
+            hasPopupBeenShown= true;
+        }
 
 
         MenuManager.setupMenu(
@@ -82,4 +90,15 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+    private void showWaterReminderPopup() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.popup_message, null);
+        builder.setView(view);
+
+        builder.setPositiveButton("OK", (dialog, which) -> dialog.dismiss());
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
 }
