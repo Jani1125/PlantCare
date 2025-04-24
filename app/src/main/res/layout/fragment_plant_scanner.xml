@@ -8,6 +8,7 @@
     android:background="@drawable/mainpic"
     tools:context=".ui.PlantScannerFragment">
 
+    <!-- Cím -->
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
@@ -23,6 +24,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.023" />
 
+    <!-- Profilkép -->
     <ImageView
         android:id="@+id/profileImageView"
         android:layout_width="48dp"
@@ -40,14 +42,11 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
 
-
+    <!-- Menü ikon -->
     <ImageView
         android:id="@+id/hamMenuIcon"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
         android:layout_marginTop="20dp"
         android:contentDescription="Menu Icon"
         android:src="@drawable/menuicon"
@@ -57,6 +56,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
+    <!-- Menü RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/menuRecyclerView"
         android:layout_width="wrap_content"
@@ -70,5 +70,40 @@
         app:layout_constraintVertical_bias="0.5"
         tools:ignore="MissingConstraints"
         tools:listitem="@layout/menu_item"/>
+
+    <!-- Kamera előnézet (élő kép) -->
+
+    <!-- Felismert növény neve -->
+
+    <androidx.camera.view.PreviewView
+        android:id="@+id/previewView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="80dp"
+        android:background="@android:color/black"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@id/detectedPlantText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView8"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/detectedPlantText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/radius_background"
+        android:gravity="center"
+        android:padding="12dp"
+        android:text="@string/detected_plant"
+        android:textColor="#7986CB"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
