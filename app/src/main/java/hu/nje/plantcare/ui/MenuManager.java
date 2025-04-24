@@ -49,6 +49,11 @@ public class MenuManager {
                         .replace(R.id.fragment_container, new OwnPlantFragment())
                         .addToBackStack(null)
                         .commit();
+            } else if ("Plant scanner".equals(item)) {
+                activity.getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new PlantScannerFragment())
+                        .addToBackStack(null)
+                        .commit();
             } else if ("Plant details".equals(item)) {
                 activity.getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, new PlantDetailsFragment())
@@ -65,8 +70,6 @@ public class MenuManager {
                     .addToBackStack(null)
                     .commit();
         }
-
-            //Plant scanne maid ide
             menuRecyclerView.setVisibility(View.GONE);
         });
 
