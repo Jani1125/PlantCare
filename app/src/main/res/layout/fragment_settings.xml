@@ -103,7 +103,7 @@
         android:layout_width="270dp"
         android:layout_height="50dp"
         android:background="@drawable/radius_background"
-        android:text="Dark/Light Mode"
+        android:text="Light/Dark Mode"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
