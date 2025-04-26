@@ -1,0 +1,26 @@
+<resources>
+    <style name="TextViewStyle">
+        <item name="android:textColor">?attr/textColor</item>
+        <item name="android:background">?attr/backgroundColor</item>
+    </style>
+
+    <style name="RecyclerViewStyle">
+        <item name="android:background">?attr/backgroundColor</item>
+    </style>
+
+    <style name="SearchViewStyle">
+        <item name="android:textColor">?attr/textColor</item>
+        <item name="android:background">?attr/backgroundColor</item>
+    </style>
+
+    <style name="SwitchStyle">
+        <item name="android:textColor">?attr/textColor</item>
+        <item name="android:background">?attr/backgroundColor</item>
+        <item name="android:thumbTint">?attr/textColor</item>
+        <item name="android:trackTint">?attr/textColor</item>
+    </style>
+
+    <style name="RoundedBackgroundViewStyle">
+        <item name="android:background">@drawable/radius_background</item>
+        <item name="android:textColor">?attr/textColor</item> </style>
+</resources>

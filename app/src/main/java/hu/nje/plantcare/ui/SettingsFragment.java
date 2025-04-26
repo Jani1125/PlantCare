@@ -1,42 +1,30 @@
 package hu.nje.plantcare.ui;
 
-import android.content.Intent;
-import android.net.Uri;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.PopupMenu;
+import android.widget.Switch;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.bumptech.glide.Glide;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import hu.nje.plantcare.MainActivity;
 import hu.nje.plantcare.R;
-import hu.nje.plantcare.SplashActivity;
-import hu.nje.plantcare.adapters.MenuAdapter;
 
 public class SettingsFragment extends Fragment {
 
-    private RecyclerView menuRecyclerView;
-    private MenuAdapter menuAdapter;
     private List<String> menuItems;
-    private LinearLayout menuLayout;
-
-    private ImageView profileImageView;
+    private static final String PREF_DARK_MODE = "dark_mode";
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -53,108 +41,50 @@ public class SettingsFragment extends Fragment {
         menuItems.add("Own plants");
         menuItems.add("Plant scanner");
         menuItems.add("Settings");
+        menuItems.add("Notifications");
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
 
-        menuRecyclerView = view.findViewById(R.id.menuRecyclerView);
-        menuRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        // Menü kezelés közös osztállyal
+        MenuManager.setupMenu(
+                (AppCompatActivity) requireActivity(),
+                menuItems,
+                view.findViewById(R.id.menuRecyclerView),
+                view.findViewById(R.id.hamMenuIcon),
+                view.findViewById(R.id.profileImageView)
+        );
 
-        menuAdapter = new MenuAdapter(getContext(), menuItems, item -> {
-            if ("Home".equals(item)) {
-                // Navigálás a főoldalra
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            } else if ("Search".equals(item)) {
-                // Settings fragment betöltése
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new SearchFragment())
-                        .addToBackStack(null)
-                        .commit();
-            }else if ("Favourite plants".equals(item)) {
-                // Settings fragment betöltése
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new FavPlantFragment())
-                        .addToBackStack(null)
-                        .commit();
-            } else if ("Own plants".equals(item)) {
-                // Settings fragment betöltése
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new OwnPlantFragment())
-                        .addToBackStack(null)
-                        .commit();
-            } /*else if ("Plant scanner".equals(item)) {
-                // Settings fragment betöltése
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new PlantScannerFragment())
-                        .addToBackStack(null)
-                        .commit();
-            }*/else if ("Settings".equals(item)) {
-                // Settings fragment betöltése
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new SettingsFragment())
-                        .addToBackStack(null)
-                        .commit();
-            }
-            menuRecyclerView.setVisibility(View.GONE);  // Menü elrejtése
-        });
+        Switch themeSwitch = view.findViewById(R.id.switch3);
+        boolean isDarkMode = PreferenceManager.getDefaultSharedPreferences(requireContext())
+                .getBoolean(PREF_DARK_MODE, false);
+        themeSwitch.setChecked(isDarkMode);
 
-        menuRecyclerView.setAdapter(menuAdapter);
+        themeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            PreferenceManager.getDefaultSharedPreferences(requireContext()).edit()
+                    .putBoolean(PREF_DARK_MODE, isChecked)
+                    .apply();
 
-        // Hamburger menü ikon kattintás kezelése
-        ImageView hamMenuIcon = view.findViewById(R.id.hamMenuIcon);
-        hamMenuIcon.setOnClickListener(v -> {
-            if (menuRecyclerView.getVisibility() == View.GONE) {
-                menuRecyclerView.setVisibility(View.VISIBLE);
+            if (isChecked) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             } else {
-                menuRecyclerView.setVisibility(View.GONE);
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             }
-        });
-
-        // Google profilkép betöltése
-        profileImageView = view.findViewById(R.id.profileImageView);
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity());
-        if (account != null && account.getPhotoUrl() != null) {
-            Uri photoUri = account.getPhotoUrl();
-            Glide.with(getActivity())
-                    .load(photoUri)
-                    .circleCrop()
-                    .into(profileImageView);
-        }
-
-        // Profilkép kattintás esemény kezelése
-        profileImageView.setOnClickListener(v -> {
-            PopupMenu popup = new PopupMenu(getActivity(), v);
-            popup.getMenuInflater().inflate(R.menu.profile_menu, popup.getMenu());
-            popup.setOnMenuItemClickListener(item -> {
-                if (item.getItemId() == R.id.menu_sign_out) {
-                    signOut();
-                    return true;
-                }
-                return false;
-            });
-            popup.show();
         });
 
         return view;
     }
 
-    // Kijelentkezés logika
-    private void signOut() {
-        FirebaseAuth.getInstance().signOut();
-        GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(getActivity(),
-                new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build());
-
-        googleSignInClient.signOut().addOnCompleteListener(getActivity(), task -> {
-            Intent intent = new Intent(getActivity(), SplashActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            getActivity().finish();
-        });
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Beállítjuk a téma állapotát a switch-nek, amikor a fragment újra láthatóvá válik
+        Switch themeSwitch = requireView().findViewById(R.id.switch3);
+        boolean isDarkMode = PreferenceManager.getDefaultSharedPreferences(requireContext())
+                .getBoolean(PREF_DARK_MODE, false);
+        themeSwitch.setChecked(isDarkMode);
     }
 }
