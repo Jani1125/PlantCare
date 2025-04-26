@@ -20,7 +20,7 @@ public interface PlantDao {
     @Query("DELETE FROM plants")
     void deleteAll();
 
-    @Query("DELETE FROM plants WHERE id = :plantId")
+    @Query("DELETE FROM plants WHERE plantId = :plantId")
     void deleteOne(int plantId);
     @Query("SELECT * FROM plants WHERE plantId = :plantId")
     Plant getPlant(int plantId);

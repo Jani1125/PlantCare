@@ -71,6 +71,15 @@ public class SearchFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        /*PlantDatabase db = PlantDatabase.getDatabase(requireContext());
+        PlantDao plantDao = db.plantDao();
+
+        new Thread(() -> {
+            plantDao.deleteAll();
+        }).start();
+    */
+
+
         menuItems = new ArrayList<>();
         menuItems.add("Home");
         menuItems.add("Search");
@@ -231,14 +240,14 @@ public class SearchFragment extends Fragment {
         new Thread(()->{
 
 
-            Plant existingPlant=plantDao.getPlant(selectedItemIndex);
-            System.out.println("existingPlante eredménye: "+existingPlant);
+            plant=plantDao.getPlant(selectedItemIndex);
+            System.out.println("existingPlante eredménye: "+plant);
 
             /// Az API hívások lecsökkentését elérve, ha a keresett növény már szerepel a kedvencek listában,
             /// úgy az elmentett növény az adatbázisból lesz betöltve, ha pedig nincs benne, úgy beletöltődik
 
         requireActivity().runOnUiThread(()->{
-            if(existingPlant==null)
+            if(plant==null)
             {
                 System.out.println("A növény részletes nézete API hivás által lett betöltve");
 
@@ -266,7 +275,7 @@ public class SearchFragment extends Fragment {
                                                     result.watering,
                                                     result.imgUrl,
                                                     result.description,
-                                                    !result.isFavorite
+                                                    true
                                             ));
                                 }).start();
                             }else
@@ -286,7 +295,7 @@ public class SearchFragment extends Fragment {
             }else
             {
                 System.out.println("A növény részletes nézete az ADATBÁZISBÓL lett betöltve");
-                detail_adapter = new PlantDetailAdapter(existingPlant, new PlantDetailAdapter.OnFavoriteClickListener() {
+                detail_adapter = new PlantDetailAdapter(plant, new PlantDetailAdapter.OnFavoriteClickListener() {
 
                     ////Click eseményre a kedvencekhez kerül a kiválasztott növény
                     /// Ha még nem kedvenc, a kedvencek közé kerül, ha pedig már kedvenc úgy kikerül a kedvencek közül
@@ -296,26 +305,26 @@ public class SearchFragment extends Fragment {
                         System.out.println("Meg lett nyomva a favorite switch");
 
                         //result.setFavorite(!result.isFavorite);
-                        if(!existingPlant.isFavorite)
+                        if(!plant.isFavorite)
                         {// Az adatokat egy új szálban mentjük el az adatbázisba
                             new Thread(() -> {
                                 plantDao.insert(
                                         new Plant(
-                                                existingPlant.plantId,
-                                                existingPlant.commonName,
-                                                existingPlant.scientificName,
-                                                existingPlant.type,
-                                                existingPlant.cycle,
-                                                existingPlant.watering,
-                                                existingPlant.imgUrl,
-                                                existingPlant.description,
-                                                !existingPlant.isFavorite
+                                                plant.plantId,
+                                                plant.commonName,
+                                                plant.scientificName,
+                                                plant.type,
+                                                plant.cycle,
+                                                plant.watering,
+                                                plant.imgUrl,
+                                                plant.description,
+                                                true
                                         ));
                             }).start();
                         }else
                         {
                             new Thread(() -> {
-                                plantDao.deleteOne(existingPlant.getId());
+                                plantDao.deleteOne(plant.getPlantId());
                             }).start();
                         }
 
@@ -324,7 +333,7 @@ public class SearchFragment extends Fragment {
                     }
                 });
 
-                detail_adapter.setPlant(existingPlant);
+                detail_adapter.setPlant(plant);
                 recyclerView.setAdapter(detail_adapter);
             }
 

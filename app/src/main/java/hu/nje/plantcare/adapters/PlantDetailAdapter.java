@@ -1,5 +1,6 @@
 package hu.nje.plantcare.adapters;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,6 +63,7 @@ public class PlantDetailAdapter extends RecyclerView.Adapter<PlantDetailAdapter.
                 clickListener.OnFavoriteClick();
                 plant.setFavorite(holder.favoriteSwitch.isChecked());
                 notifyItemChanged(position);
+//                holder.favoriteSwitch.setChecked(plant.isFavorite);
             }
         });
         holder.descriptionTextView.setText(plant.description);
@@ -82,6 +84,7 @@ public class PlantDetailAdapter extends RecyclerView.Adapter<PlantDetailAdapter.
         private final TextView typeTextView;
         private final TextView cycleTextView;
         private final TextView wateringTextView;
+        @SuppressLint("UseSwitchCompatOrMaterialCode")
         private final Switch favoriteSwitch;
         private final TextView descriptionTextView;
 
