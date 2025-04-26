@@ -21,13 +21,13 @@
 
     <TextView
         android:id="@+id/textView"
+        style="@style/TextViewStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@drawable/radius_background"
         android:fontFamily="sans-serif-black"
         android:text="Settings"
-        android:textColor="@color/black"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -67,6 +67,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/menuRecyclerView"
+        style="@style/RecyclerViewStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
@@ -81,6 +82,7 @@
 
     <Switch
         android:id="@+id/switch2"
+        style="@style/SwitchStyle"
         android:layout_width="270dp"
         android:layout_height="50dp"
         android:background="@drawable/radius_background"
@@ -97,6 +99,7 @@
 
     <Switch
         android:id="@+id/switch3"
+        style="@style/SwitchStyle"
         android:layout_width="270dp"
         android:layout_height="50dp"
         android:background="@drawable/radius_background"
@@ -113,6 +116,7 @@
 
     <Switch
         android:id="@+id/switch4"
+        style="@style/SwitchStyle"
         android:layout_width="270dp"
         android:layout_height="50dp"
         android:background="@drawable/radius_background"

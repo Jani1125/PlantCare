@@ -11,12 +11,12 @@
 
     <TextView
         android:id="@+id/textView8"
+        style="@style/TextViewStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/radius_background"
         android:fontFamily="sans-serif-black"
         android:text="Notifications"
-        android:textColor="@color/black"
         android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

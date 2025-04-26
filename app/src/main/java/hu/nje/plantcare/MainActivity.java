@@ -1,5 +1,6 @@
 package hu.nje.plantcare;
 
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,10 +10,12 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.PopupMenu;
 
 import android.view.View;
 
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -59,9 +62,18 @@ public class MainActivity extends AppCompatActivity {
     // Az adatok tárolására használt StringBuilder
     StringBuilder details = new StringBuilder();
     private static boolean hasPopupBeenShown = false;
+    private static final String PREF_DARK_MODE = "dark_mode";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Téma beállítása a mentett állapot alapján
+        boolean isDarkMode = PreferenceManager.getDefaultSharedPreferences(this)
+                .getBoolean(PREF_DARK_MODE, false);
+        if (isDarkMode) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 

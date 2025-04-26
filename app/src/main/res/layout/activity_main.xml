@@ -10,13 +10,13 @@
 
     <TextView
         android:id="@+id/textView4"
+        style="@style/TextViewStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:background="@drawable/radius_background"
         android:fontFamily="sans-serif-black"
         android:text="Home"
-        android:textColor="#040404"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,6 +58,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/menuRecyclerView"
+        style="@style/RecyclerViewStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
@@ -69,32 +70,6 @@
         app:layout_constraintVertical_bias="0.5"
         tools:ignore="MissingConstraints"
         tools:listitem="@layout/menu_item"/>
-
-
-
-    <ImageView
-        android:id="@+id/hamMenuIcon"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="20dp"
-        android:contentDescription="Menu Icon"
-        android:src="@drawable/menuicon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.043"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="DuplicateIds,MissingConstraints" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/menuRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-    android:layout_marginTop="50dp"
-        tools:ignore="DuplicateIds,MissingConstraints" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -109,34 +84,33 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-black"
-        android:text="PlantCare"
-        android:textColor="@color/black"
-        android:textSize="48sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.218" />
-
-    <TextView
         android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/TextViewStyle"
+        android:layout_width="258dp"
+        android:layout_height="64dp"
+        android:background="@drawable/radius_background"
         android:fontFamily="sans-serif-condensed"
         android:text="Plant care diary and plant identification application"
         android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="34sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.394" />
+        app:layout_constraintVertical_bias="0.554" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="246dp"
+        android:layout_height="271dp"
+        android:src="@drawable/plantcare_logo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.215" />
 
     <FrameLayout
         android:id="@+id/fragment_container"
