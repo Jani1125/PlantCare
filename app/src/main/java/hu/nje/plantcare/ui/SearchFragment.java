@@ -254,7 +254,7 @@ public class SearchFragment extends Fragment {
                 ApiService.ApiRequest(requireContext(),selectedItemIndex,API_KEY,result ->{
                     detail_adapter = new PlantDetailAdapter(result, new PlantDetailAdapter.OnFavoriteClickListener() {
 
-                        ////Click eseményre a kedvencekhez kerül a kiválasztott növény
+                        /// /Click eseményre a kedvencekhez kerül a kiválasztott növény
                         /// Ha még nem kedvenc, a kedvencek közé kerül, ha pedig már kedvenc úgy kikerül a kedvencek közül
                         @Override
                         public void OnFavoriteClick() {
@@ -262,8 +262,7 @@ public class SearchFragment extends Fragment {
                             System.out.println("Meg lett nyomva a favorite switch");
 
                             //result.setFavorite(!result.isFavorite);
-                            if(!result.isFavorite)
-                            {// Az adatokat egy új szálban mentjük el az adatbázisba
+                            if (!result.isFavorite) {// Az adatokat egy új szálban mentjük el az adatbázisba
                                 new Thread(() -> {
                                     plantDao.insert(
                                             new Plant(
@@ -278,15 +277,18 @@ public class SearchFragment extends Fragment {
                                                     true
                                             ));
                                 }).start();
-                            }else
-                            {
+                            } else {
                                 new Thread(() -> {
                                     plantDao.deleteOne(result.getId());
                                 }).start();
                             }
 
 
-
+                        }
+                    }, new PlantDetailAdapter.OnBackClickListener() {
+                        @Override
+                        public void OnBackClick() {
+                            recyclerView.setAdapter(basic_adapter);
                         }
                     });
                     detail_adapter.setPlant(result);
@@ -297,7 +299,7 @@ public class SearchFragment extends Fragment {
                 System.out.println("A növény részletes nézete az ADATBÁZISBÓL lett betöltve");
                 detail_adapter = new PlantDetailAdapter(plant, new PlantDetailAdapter.OnFavoriteClickListener() {
 
-                    ////Click eseményre a kedvencekhez kerül a kiválasztott növény
+                    /// /Click eseményre a kedvencekhez kerül a kiválasztott növény
                     /// Ha még nem kedvenc, a kedvencek közé kerül, ha pedig már kedvenc úgy kikerül a kedvencek közül
                     @Override
                     public void OnFavoriteClick() {
@@ -305,8 +307,7 @@ public class SearchFragment extends Fragment {
                         System.out.println("Meg lett nyomva a favorite switch");
 
                         //result.setFavorite(!result.isFavorite);
-                        if(!plant.isFavorite)
-                        {// Az adatokat egy új szálban mentjük el az adatbázisba
+                        if (!plant.isFavorite) {// Az adatokat egy új szálban mentjük el az adatbázisba
                             new Thread(() -> {
                                 plantDao.insert(
                                         new Plant(
@@ -321,15 +322,18 @@ public class SearchFragment extends Fragment {
                                                 true
                                         ));
                             }).start();
-                        }else
-                        {
+                        } else {
                             new Thread(() -> {
                                 plantDao.deleteOne(plant.getPlantId());
                             }).start();
                         }
 
 
-
+                    }
+                }, new PlantDetailAdapter.OnBackClickListener() {
+                    @Override
+                    public void OnBackClick() {
+                        recyclerView.setAdapter(basic_adapter);
                     }
                 });
 

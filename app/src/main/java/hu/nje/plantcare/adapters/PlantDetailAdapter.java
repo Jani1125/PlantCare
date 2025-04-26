@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -21,12 +22,15 @@ public class PlantDetailAdapter extends RecyclerView.Adapter<PlantDetailAdapter.
 {
 
     private OnFavoriteClickListener clickListener;
+    private OnBackClickListener backListener;
+
     private Plant plant;
 
-    public PlantDetailAdapter(Plant plant,OnFavoriteClickListener clickListener)
+    public PlantDetailAdapter(Plant plant,OnFavoriteClickListener clickListener, OnBackClickListener backListener)
     {
         this.plant = plant;
         this.clickListener=clickListener;
+        this.backListener=backListener;
     }
 
     public void setPlant(Plant plant)
@@ -46,6 +50,12 @@ public class PlantDetailAdapter extends RecyclerView.Adapter<PlantDetailAdapter.
     @Override
     public void onBindViewHolder(@NonNull PlantViewHolder holder, int position) {
 
+        holder.back2list.setOnClickListener(v->{
+            if(backListener!=null)
+            {
+                backListener.OnBackClick();
+            }
+        });
         Glide.with(holder.itemView.getContext())
                 .load(plant.getImgUrl()) // <-- Ez az URL-ed
                 //.placeholder(R.drawable.placeholder) // opcionális betöltés közbeni kép
@@ -78,6 +88,7 @@ public class PlantDetailAdapter extends RecyclerView.Adapter<PlantDetailAdapter.
 
     public static class PlantViewHolder extends RecyclerView.ViewHolder
     {
+        private final Button back2list;
         private final ImageView plantImage;
         private final TextView commonNameTextView;
         private final TextView scientificNameTextView;
@@ -92,6 +103,7 @@ public class PlantDetailAdapter extends RecyclerView.Adapter<PlantDetailAdapter.
         {
 
             super(itemView);
+            back2list = itemView.findViewById(R.id.btn_backToList);
             plantImage = itemView.findViewById(R.id.plant_image);
             commonNameTextView = itemView.findViewById(R.id.common_name);
             scientificNameTextView = itemView.findViewById(R.id.scientific_name);
@@ -106,6 +118,9 @@ public class PlantDetailAdapter extends RecyclerView.Adapter<PlantDetailAdapter.
 
     public interface OnFavoriteClickListener{
         void OnFavoriteClick();
+    }
+    public interface OnBackClickListener{
+        void OnBackClick();
     }
 
 }
