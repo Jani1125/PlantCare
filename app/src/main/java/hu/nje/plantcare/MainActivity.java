@@ -47,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
     /// //////////////////////////////////////////////////////////////////
 
 
+
+
+
     /////// UI elemek //////////////////////////////
     private TextView data;
     private TextView infoText;

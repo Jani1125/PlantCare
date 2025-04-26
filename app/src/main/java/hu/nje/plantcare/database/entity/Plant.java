@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey;
 public class Plant {
     @PrimaryKey(autoGenerate = true)
     public int id;
+    public int plantId;
     public String commonName;
     public String scientificName;
     public String type;
@@ -18,7 +19,8 @@ public class Plant {
 
 
 
-    public Plant(String commonName, String scientificName, String type, String cycle, String watering, String imgUrl,String description, boolean isFavorite) {
+    public Plant(int plantId,String commonName, String scientificName, String type, String cycle, String watering, String imgUrl,String description, boolean isFavorite) {
+        this.plantId=plantId;
         this.commonName = commonName;
         this.scientificName = scientificName;
         this.type = type;
@@ -39,6 +41,14 @@ public class Plant {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getPlantId() {
+        return plantId;
+    }
+
+    public void setPlantId(int plantId) {
+        this.plantId = plantId;
     }
 
     public String getCommonName() {

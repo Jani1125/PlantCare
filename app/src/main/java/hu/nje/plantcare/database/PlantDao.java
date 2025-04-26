@@ -1,6 +1,7 @@
 package hu.nje.plantcare.database;
 
 import androidx.room.Dao;
+import androidx.room.DeleteColumn;
 import androidx.room.Insert;
 import androidx.room.Query;
 
@@ -19,12 +20,9 @@ public interface PlantDao {
     @Query("DELETE FROM plants")
     void deleteAll();
 
-
-
-
-    //void setFavorite(int id, boolean isFavorite);
-
-    //@Query("UPDATE plants SET isFavorite = :isFavorite WHERE id = :id")
-    //void setFavorite(int id, boolean isFavorite);  // Módszer a kedvenc beállításához
+    @Query("DELETE FROM plants WHERE id = :plantId")
+    void deleteOne(int plantId);
+    @Query("SELECT * FROM plants WHERE plantId = :plantId")
+    Plant getPlant(int plantId);
 }
 

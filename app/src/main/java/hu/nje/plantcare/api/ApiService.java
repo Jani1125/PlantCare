@@ -28,17 +28,12 @@ public class ApiService {
         // Az API URL összeállítása a kapott ID és API kulcs alapján
         String species_url = detailsUrl + id + "?key=" + apiKey;
 
-        // Adatbázis elérése
-        /*
-        PlantDatabase db = PlantDatabase.getDatabase(context);
-        PlantDao plantDao = db.plantDao();
-        */
-
         // API kérés indítása Volley-val
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, species_url, null,
                 species -> {  // Ha sikeres a kérés
                     try {
                         // Az API válasz feldolgozása
+                        int plantId = species.optInt("id");
                         String commonName = species.optString("common_name", "N/A");
                         JSONArray scientificNamesArray = species.optJSONArray("scientific_name");
                         String scientificName = (scientificNamesArray != null && scientificNamesArray.length() > 0)
@@ -58,13 +53,8 @@ public class ApiService {
 
                         boolean isFavorite = false;
 
-                        Plant plant = new Plant(commonName,scientificName,type,cycle,watering,imgUrl,description,isFavorite);
-                        /*
-                        // Az adatokat egy új szálban mentjük el az adatbázisba
-                        new Thread(() -> {
-                            plantDao.insert(new Plant(commonName, scientificName, type, cycle, watering,imgUrl,description,isFavorite));
-                        }).start();
-                        */
+                        Plant plant = new Plant(plantId,commonName,scientificName,type,cycle,watering,imgUrl,description,isFavorite);
+
 
                         callback.onResult(plant);
                     } catch (Exception e) {

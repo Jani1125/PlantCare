@@ -90,12 +90,6 @@ public class OwnPlantFragment extends Fragment {
                         .replace(R.id.fragment_container, new OwnPlantFragment())
                         .addToBackStack(null)
                         .commit();
-            } else if ("Plant details".equals(item)) {
-                // Settings fragment betöltése
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new PlantDetailsFragment())
-                        .addToBackStack(null)
-                        .commit();
             } /*else if ("Plant scanner".equals(item)) {
                 // Settings fragment betöltése
                 getActivity().getSupportFragmentManager().beginTransaction()

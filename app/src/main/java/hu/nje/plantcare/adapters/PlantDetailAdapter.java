@@ -4,12 +4,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.slider.Slider;
 
 import hu.nje.plantcare.R;
 import hu.nje.plantcare.database.entity.Plant;
@@ -17,11 +19,13 @@ import hu.nje.plantcare.database.entity.Plant;
 public class PlantDetailAdapter extends RecyclerView.Adapter<PlantDetailAdapter.PlantViewHolder>
 {
 
+    private OnFavoriteClickListener clickListener;
     private Plant plant;
 
-    public PlantDetailAdapter(Plant plant)
+    public PlantDetailAdapter(Plant plant,OnFavoriteClickListener clickListener)
     {
         this.plant = plant;
+        this.clickListener=clickListener;
     }
 
     public void setPlant(Plant plant)
@@ -52,6 +56,14 @@ public class PlantDetailAdapter extends RecyclerView.Adapter<PlantDetailAdapter.
         holder.typeTextView.setText(plant.type);
         holder.cycleTextView.setText(plant.cycle);
         holder.wateringTextView.setText(plant.watering);
+        holder.favoriteSwitch.setChecked(plant.isFavorite);
+        holder.favoriteSwitch.setOnClickListener(v->{
+            if (clickListener != null) {
+                clickListener.OnFavoriteClick();
+                plant.setFavorite(holder.favoriteSwitch.isChecked());
+                notifyItemChanged(position);
+            }
+        });
         holder.descriptionTextView.setText(plant.description);
 
     }
@@ -70,6 +82,7 @@ public class PlantDetailAdapter extends RecyclerView.Adapter<PlantDetailAdapter.
         private final TextView typeTextView;
         private final TextView cycleTextView;
         private final TextView wateringTextView;
+        private final Switch favoriteSwitch;
         private final TextView descriptionTextView;
 
         PlantViewHolder(View itemView)
@@ -82,9 +95,14 @@ public class PlantDetailAdapter extends RecyclerView.Adapter<PlantDetailAdapter.
             typeTextView = itemView.findViewById(R.id.type);
             cycleTextView = itemView.findViewById(R.id.cycle);
             wateringTextView = itemView.findViewById(R.id.watering);
+            favoriteSwitch = itemView.findViewById(R.id.favorite_switch);
             descriptionTextView = itemView.findViewById(R.id.description);
 
         }
+    }
+
+    public interface OnFavoriteClickListener{
+        void OnFavoriteClick();
     }
 
 }

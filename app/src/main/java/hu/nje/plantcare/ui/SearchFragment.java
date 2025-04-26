@@ -34,6 +34,8 @@ import hu.nje.plantcare.adapters.BasicPlantAdapter;
 import hu.nje.plantcare.adapters.MenuAdapter;
 import hu.nje.plantcare.adapters.PlantDetailAdapter;
 import hu.nje.plantcare.api.ApiService;
+import hu.nje.plantcare.database.PlantDao;
+import hu.nje.plantcare.database.PlantDatabase;
 import hu.nje.plantcare.database.entity.BasicPlant;
 import hu.nje.plantcare.database.entity.Plant;
 
@@ -220,14 +222,119 @@ public class SearchFragment extends Fragment {
 
     private void getDetailsWithApi(int selectedItemIndex)
     {
+        System.out.println("Meg lett nyomva egy növény");
 
-        System.out.println("Meg lett hívva a getDetailsWithApi függvény");
+        PlantDatabase db = PlantDatabase.getDatabase(requireContext());
+        PlantDao plantDao = db.plantDao();
 
-        ApiService.ApiRequest(requireContext(),selectedItemIndex,API_KEY,result ->{
-            detail_adapter = new PlantDetailAdapter(result);
-            detail_adapter.setPlant(result);
-            recyclerView.setAdapter(detail_adapter);
+
+        new Thread(()->{
+
+
+            Plant existingPlant=plantDao.getPlant(selectedItemIndex);
+            System.out.println("existingPlante eredménye: "+existingPlant);
+
+            /// Az API hívások lecsökkentését elérve, ha a keresett növény már szerepel a kedvencek listában,
+            /// úgy az elmentett növény az adatbázisból lesz betöltve, ha pedig nincs benne, úgy beletöltődik
+
+        requireActivity().runOnUiThread(()->{
+            if(existingPlant==null)
+            {
+                System.out.println("A növény részletes nézete API hivás által lett betöltve");
+
+                ApiService.ApiRequest(requireContext(),selectedItemIndex,API_KEY,result ->{
+                    detail_adapter = new PlantDetailAdapter(result, new PlantDetailAdapter.OnFavoriteClickListener() {
+
+                        ////Click eseményre a kedvencekhez kerül a kiválasztott növény
+                        /// Ha még nem kedvenc, a kedvencek közé kerül, ha pedig már kedvenc úgy kikerül a kedvencek közül
+                        @Override
+                        public void OnFavoriteClick() {
+
+                            System.out.println("Meg lett nyomva a favorite switch");
+
+                            //result.setFavorite(!result.isFavorite);
+                            if(!result.isFavorite)
+                            {// Az adatokat egy új szálban mentjük el az adatbázisba
+                                new Thread(() -> {
+                                    plantDao.insert(
+                                            new Plant(
+                                                    result.plantId,
+                                                    result.commonName,
+                                                    result.scientificName,
+                                                    result.type,
+                                                    result.cycle,
+                                                    result.watering,
+                                                    result.imgUrl,
+                                                    result.description,
+                                                    !result.isFavorite
+                                            ));
+                                }).start();
+                            }else
+                            {
+                                new Thread(() -> {
+                                    plantDao.deleteOne(result.getId());
+                                }).start();
+                            }
+
+
+
+                        }
+                    });
+                    detail_adapter.setPlant(result);
+                    recyclerView.setAdapter(detail_adapter);
+                });
+            }else
+            {
+                System.out.println("A növény részletes nézete az ADATBÁZISBÓL lett betöltve");
+                detail_adapter = new PlantDetailAdapter(existingPlant, new PlantDetailAdapter.OnFavoriteClickListener() {
+
+                    ////Click eseményre a kedvencekhez kerül a kiválasztott növény
+                    /// Ha még nem kedvenc, a kedvencek közé kerül, ha pedig már kedvenc úgy kikerül a kedvencek közül
+                    @Override
+                    public void OnFavoriteClick() {
+
+                        System.out.println("Meg lett nyomva a favorite switch");
+
+                        //result.setFavorite(!result.isFavorite);
+                        if(!existingPlant.isFavorite)
+                        {// Az adatokat egy új szálban mentjük el az adatbázisba
+                            new Thread(() -> {
+                                plantDao.insert(
+                                        new Plant(
+                                                existingPlant.plantId,
+                                                existingPlant.commonName,
+                                                existingPlant.scientificName,
+                                                existingPlant.type,
+                                                existingPlant.cycle,
+                                                existingPlant.watering,
+                                                existingPlant.imgUrl,
+                                                existingPlant.description,
+                                                !existingPlant.isFavorite
+                                        ));
+                            }).start();
+                        }else
+                        {
+                            new Thread(() -> {
+                                plantDao.deleteOne(existingPlant.getId());
+                            }).start();
+                        }
+
+
+
+                    }
+                });
+
+                detail_adapter.setPlant(existingPlant);
+                recyclerView.setAdapter(detail_adapter);
+            }
+
+            System.out.println("Meg lett hívva a getDetailsWithApi függvény");
         });
+
+
+        }).start();
+
+
     }
 
     /// ////////////////////////////////////////////////////////////////
