@@ -15,11 +15,11 @@ import java.util.List;
 
 import hu.nje.plantcare.R;
 
-public class OwnPlantFragment extends Fragment {
+public class MessagesFragment extends Fragment {
 
     private List<String> menuItems;
 
-    public OwnPlantFragment() {
+    public MessagesFragment() {
         // Required empty public constructor
     }
 
@@ -42,7 +42,7 @@ public class OwnPlantFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_own_plant, container, false);
+        View view = inflater.inflate(R.layout.fragment_messages, container, false);
 
         // Itt hívjuk meg a közös menü beállítást
         MenuManager.setupMenu(

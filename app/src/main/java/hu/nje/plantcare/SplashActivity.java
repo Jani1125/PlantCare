@@ -6,6 +6,8 @@ import android.os.Handler;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -21,9 +23,9 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         // Animáció betöltése
-        Button logoButton = findViewById(R.id.logoButton);
+        ImageView imageView3 = findViewById(R.id.imageView3);
         Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
-        logoButton.startAnimation(fadeIn);
+        imageView3.startAnimation(fadeIn);
 
         // Ellenőrizzük, hogy a felhasználó be van-e jelentkezve
         new Handler().postDelayed(() -> {
