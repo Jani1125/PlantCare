@@ -52,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
     /// //////////////////////////////////////////////////////////////////
 
 
+
+
+
     /////// UI elemek //////////////////////////////
     private TextView data;
     private TextView infoText;
@@ -77,6 +80,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
+
+        // Menüelemek inicializálása
         menuItems = new ArrayList<>();
         menuItems.add("Home");
         menuItems.add("Search");
