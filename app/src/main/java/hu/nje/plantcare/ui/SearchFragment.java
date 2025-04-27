@@ -24,6 +24,7 @@ import hu.nje.plantcare.api.ApiService;
 import hu.nje.plantcare.database.PlantDao;
 import hu.nje.plantcare.database.PlantDatabase;
 import hu.nje.plantcare.database.entity.BasicPlant;
+import hu.nje.plantcare.database.entity.Plant;
 
 public class SearchFragment extends Fragment {
 

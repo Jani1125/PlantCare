@@ -54,11 +54,7 @@ public class MenuManager {
                         .replace(R.id.fragment_container, new PlantScannerFragment())
                         .addToBackStack(null)
                         .commit();
-            } else if ("Plant details".equals(item)) {
-                activity.getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new PlantDetailsFragment())
-                        .addToBackStack(null)
-                        .commit();
+            
             } else if ("Settings".equals(item)) {
                 activity.getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, new SettingsFragment())
