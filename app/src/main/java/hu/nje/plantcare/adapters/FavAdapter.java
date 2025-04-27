@@ -69,7 +69,7 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.PlantViewHolder>
             super(itemView);
             commonName = itemView.findViewById(R.id.common_name);
             scientificName = itemView.findViewById(R.id.scientific_name);
-            favoriteIcon = itemView.findViewById(R.id.favorite_icon);  // Kedvenc gomb
+            //favoriteIcon = itemView.findViewById(R.id.favorite_icon);  // Kedvenc gomb
         }
     }
 }
