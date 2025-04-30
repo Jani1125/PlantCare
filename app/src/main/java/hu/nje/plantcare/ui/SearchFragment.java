@@ -222,18 +222,18 @@ public class SearchFragment extends Fragment {
         PlantDatabase db = PlantDatabase.getDatabase(requireContext());
         PlantDao plantDao = db.plantDao();
 
-        if (!p.isFavorite) {// Az adatokat egy új szálban mentjük el az adatbázisba
+        if (!p.isFavorite()) {// Az adatokat egy új szálban mentjük el az adatbázisba
             new Thread(() -> {
                 plantDao.insert(
                         new Plant(
-                                p.plantId,
-                                p.commonName,
-                                p.scientificName,
-                                p.type,
-                                p.cycle,
-                                p.watering,
-                                p.imgUrl,
-                                p.description,
+                                p.getPlantId(),
+                                p.getCommonName(),
+                                p.getScientificName(),
+                                p.getType(),
+                                p.getCycle(),
+                                p.getWatering(),
+                                p.getImgUrl(),
+                                p.getDescription(),
                                 true
                         ));
             }).start();

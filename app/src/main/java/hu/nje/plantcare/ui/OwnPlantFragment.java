@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hu.nje.plantcare.R;
+import hu.nje.plantcare.adapters.OwnPlantAdapter;
+import hu.nje.plantcare.database.OwnPlantDao;
+import hu.nje.plantcare.database.PlantDatabase;
+import hu.nje.plantcare.database.entity.OwnPlant;
 
 public class OwnPlantFragment extends Fragment {
 
@@ -22,6 +27,14 @@ public class OwnPlantFragment extends Fragment {
     public OwnPlantFragment() {
         // Required empty public constructor
     }
+
+    private PlantDatabase db;
+    private OwnPlantDao ownPlantDao;
+
+    private RecyclerView recyclerView;
+    private OwnPlantAdapter own_adapter;
+    private List<OwnPlant> ownPlantList;
+    private Button newPlantButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,6 +48,11 @@ public class OwnPlantFragment extends Fragment {
         menuItems.add("Plant scanner");
         menuItems.add("Settings");
         menuItems.add("Notifications");
+
+        db = PlantDatabase.getDatabase(requireContext());
+        ownPlantDao = db.ownPlantDao();
+
+
     }
 
     @Override
@@ -42,6 +60,25 @@ public class OwnPlantFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_own_plant, container, false);
+
+
+        newPlantButton = view.findViewById(R.id.btn_addPlant);
+        newPlantButton.setOnClickListener(v ->{
+            //Itt lesz a FormAdapter meghívva
+            // NewPlantAdapter
+            // newPlant_adapter = new NewPlantAdapter();
+        });
+
+        recyclerView = view.findViewById(R.id.ownplantrecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        own_adapter = new OwnPlantAdapter(ownPlantList, new OwnPlantAdapter.OnDeleteClickListener() {
+            @Override
+            public void OnDeleteClick(int ownPlantId) {
+                DeletePlantFromDb(ownPlantId);
+            }
+        });
+        recyclerView.setAdapter(own_adapter);
+        GetAllOwnPlantFromDb();
 
         // Itt hívjuk meg a közös menü beállítást
         MenuManager.setupMenu(
@@ -54,4 +91,22 @@ public class OwnPlantFragment extends Fragment {
 
         return view;
     }
+
+    public void DeletePlantFromDb(int id)
+    {
+        new Thread(()->{
+            requireActivity().runOnUiThread(()-> {
+                ownPlantDao.deletePlant(id);
+            });
+        }).start();
+    }
+    public void GetAllOwnPlantFromDb() {
+        new Thread(() -> {
+            ownPlantList = ownPlantDao.getAllOwnPlants();  // Run in background
+            requireActivity().runOnUiThread(() -> {
+                own_adapter.setOwnPlants(ownPlantList);     // Update UI
+            });
+        }).start();
+    }
+
 }

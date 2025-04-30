@@ -63,10 +63,10 @@ public class PlantDetailAdapter extends RecyclerView.Adapter<PlantDetailAdapter.
 
         holder.commonNameTextView.setText(plant.getCommonName());
         holder.scientificNameTextView.setText(plant.getScientificName());
-        holder.typeTextView.setText(plant.type);
-        holder.cycleTextView.setText(plant.cycle);
-        holder.wateringTextView.setText(plant.watering);
-        holder.favoriteSwitch.setChecked(plant.isFavorite);
+        holder.typeTextView.setText(plant.getType());
+        holder.cycleTextView.setText(plant.getCycle());
+        holder.wateringTextView.setText(plant.getWatering());
+        holder.favoriteSwitch.setChecked(plant.isFavorite());
         holder.favoriteSwitch.setOnClickListener(v->{
             if (clickListener != null) {
                 clickListener.OnFavoriteClick();
@@ -75,7 +75,7 @@ public class PlantDetailAdapter extends RecyclerView.Adapter<PlantDetailAdapter.
 //                holder.favoriteSwitch.setChecked(plant.isFavorite);
             }
         });
-        holder.descriptionTextView.setText(plant.description);
+        holder.descriptionTextView.setText(plant.getDescription());
 
     }
 

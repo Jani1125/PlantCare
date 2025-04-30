@@ -18,4 +18,7 @@ public interface OwnPlantDao {
 
     @Query("DELETE FROM own_plants")
     void deleteAllOwnPlants();
+
+    @Query("DELETE FROM own_plants WHERE id = :id")
+    void deletePlant(int id);
 }

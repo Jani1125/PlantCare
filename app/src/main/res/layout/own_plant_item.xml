@@ -15,9 +15,9 @@
         android:src="@drawable/plant_placeholder"
         android:layout_marginEnd="16dp" />
 
-    <!-- Szöveg + ikon jobb oldalt -->
+    <!-- Szöveg + ikon középen -->
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical">
@@ -28,29 +28,36 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Common Name"
+            android:textColor="@android:color/black"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/black" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/plant_scientific_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Scientific Name"
-            android:textSize="14sp"
-            android:textColor="@android:color/darker_gray" />
+            android:textColor="@android:color/darker_gray"
+            android:textSize="14sp" />
 
         <!-- Középre igazított ikon -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:layout_marginTop="8dp">
-
-
-        </LinearLayout>
-
+            android:orientation="horizontal"></LinearLayout>
     </LinearLayout>
+
+    <!-- Delete Button -->
+    <ImageButton
+        android:id="@+id/deleteButton"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="center_vertical"
+        android:background="@android:color/transparent"
+        android:src="@android:drawable/ic_menu_delete"
+        android:scaleType="centerInside"
+        android:contentDescription="Delete" />
 
 </LinearLayout>

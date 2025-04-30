@@ -6,16 +6,16 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "plants")
 public class Plant {
     @PrimaryKey(autoGenerate = true)
-    public int id;
-    public int plantId;
-    public String commonName;
-    public String scientificName;
-    public String type;
-    public String cycle;
-    public String watering;
-    public String imgUrl;
-    public String description;
-    public boolean isFavorite;
+    private int id;
+    private int plantId;
+    private String commonName;
+    private String scientificName;
+    private String type;
+    private String cycle;
+    private String watering;
+    private String imgUrl;
+    private String description;
+    private boolean isFavorite;
 
 
 
