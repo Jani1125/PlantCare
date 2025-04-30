@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.material.slider.Slider;
 
 import hu.nje.plantcare.R;
 import hu.nje.plantcare.database.entity.Plant;
@@ -43,7 +42,7 @@ public class PlantDetailAdapter extends RecyclerView.Adapter<PlantDetailAdapter.
     public PlantViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.searched_item_details, parent, false);
+                .inflate(R.layout.plant_item_details, parent, false);
         return new PlantViewHolder(itemView);
     }
 

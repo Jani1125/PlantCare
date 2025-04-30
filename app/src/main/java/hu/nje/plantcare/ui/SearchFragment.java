@@ -33,7 +33,7 @@ public class SearchFragment extends Fragment {
     private List<String> menuItems;
 
     private static final String API_KEY = "sk-MzET67d004cc29a259082";
-    private static final String baseUrl = "https://perenual.com/api/v2/species/details/";
+
 
     public SearchFragment() {
         // Required empty public constructor
@@ -58,7 +58,7 @@ public class SearchFragment extends Fragment {
         new Thread(() -> {
             plantDao.deleteAll();
         }).start();
-    */
+        */
 
 
         menuItems = new ArrayList<>();
@@ -167,26 +167,7 @@ public class SearchFragment extends Fragment {
                             System.out.println("Meg lett nyomva a favorite switch");
 
                             //result.setFavorite(!result.isFavorite);
-                            if (!result.isFavorite) {// Az adatokat egy új szálban mentjük el az adatbázisba
-                                new Thread(() -> {
-                                    plantDao.insert(
-                                            new Plant(
-                                                    result.plantId,
-                                                    result.commonName,
-                                                    result.scientificName,
-                                                    result.type,
-                                                    result.cycle,
-                                                    result.watering,
-                                                    result.imgUrl,
-                                                    result.description,
-                                                    true
-                                            ));
-                                }).start();
-                            } else {
-                                new Thread(() -> {
-                                    plantDao.deleteOne(result.getId());
-                                }).start();
-                            }
+                            if(result!=null) insertIntoDb(result);
 
 
                         }
@@ -212,26 +193,7 @@ public class SearchFragment extends Fragment {
                         System.out.println("Meg lett nyomva a favorite switch");
 
                         //result.setFavorite(!result.isFavorite);
-                        if (!plant.isFavorite) {// Az adatokat egy új szálban mentjük el az adatbázisba
-                            new Thread(() -> {
-                                plantDao.insert(
-                                        new Plant(
-                                                plant.plantId,
-                                                plant.commonName,
-                                                plant.scientificName,
-                                                plant.type,
-                                                plant.cycle,
-                                                plant.watering,
-                                                plant.imgUrl,
-                                                plant.description,
-                                                true
-                                        ));
-                            }).start();
-                        } else {
-                            new Thread(() -> {
-                                plantDao.deleteOne(plant.getPlantId());
-                            }).start();
-                        }
+                        if(plant!=null) insertIntoDb(plant);
 
 
                     }
@@ -253,6 +215,33 @@ public class SearchFragment extends Fragment {
         }).start();
 
 
+    }
+
+    private void insertIntoDb(Plant p)
+    {
+        PlantDatabase db = PlantDatabase.getDatabase(requireContext());
+        PlantDao plantDao = db.plantDao();
+
+        if (!p.isFavorite) {// Az adatokat egy új szálban mentjük el az adatbázisba
+            new Thread(() -> {
+                plantDao.insert(
+                        new Plant(
+                                p.plantId,
+                                p.commonName,
+                                p.scientificName,
+                                p.type,
+                                p.cycle,
+                                p.watering,
+                                p.imgUrl,
+                                p.description,
+                                true
+                        ));
+            }).start();
+        } else {
+            new Thread(() -> {
+                plantDao.deleteOne(p.getId());
+            }).start();
+        }
     }
 
 

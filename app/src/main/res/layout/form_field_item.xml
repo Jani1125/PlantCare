@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/inputCommonName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Common Name"
+            android:minHeight="48dp" />
+
+        <EditText
+            android:id="@+id/inputScientificName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Scientific Name"
+            android:minHeight="48dp" />
+
+        <EditText
+            android:id="@+id/inputType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Type"
+            android:minHeight="48dp" />
+
+        <EditText
+            android:id="@+id/inputCycle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Cycle"
+            android:minHeight="48dp" />
+
+        <EditText
+            android:id="@+id/inputWatering"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Watering"
+            android:minHeight="48dp" />
+
+        <!-- Replace this with picture selector -->
+        <TextView
+            android:id="@+id/imageSelectorLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Image"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp" />
+
+        <LinearLayout
+            android:id="@+id/imageSelectorLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="8dp">
+
+            <Button
+                android:id="@+id/buttonChooseTemplate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Template" />
+
+            <Button
+                android:id="@+id/buttonTakePicture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Camera"
+                android:layout_marginStart="8dp" />
+
+            <Button
+                android:id="@+id/buttonChooseGallery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gallery"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/previewImageView"
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/radius_background"
+            android:contentDescription="Selected image preview"
+            android:scaleType="centerCrop" />
+
+        <EditText
+            android:id="@+id/inputDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Description"
+            android:inputType="textMultiLine"
+            android:minLines="3" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

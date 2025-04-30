@@ -15,7 +15,6 @@ import java.util.List;
 
 import hu.nje.plantcare.R;
 import hu.nje.plantcare.database.entity.BasicPlant;
-import hu.nje.plantcare.database.entity.Plant;
 
 public class BasicPlantAdapter extends RecyclerView.Adapter<BasicPlantAdapter.PlantViewHolder> {
 
@@ -36,7 +35,7 @@ public class BasicPlantAdapter extends RecyclerView.Adapter<BasicPlantAdapter.Pl
     @Override
     public PlantViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.searched_item, parent, false);
+                .inflate(R.layout.plant_item, parent, false);
         return new PlantViewHolder(itemView);
     }
 
