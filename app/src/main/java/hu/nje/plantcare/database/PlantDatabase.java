@@ -10,7 +10,7 @@ import hu.nje.plantcare.database.entity.OwnPlant;
 import hu.nje.plantcare.database.entity.Plant;
 
 // **Room adatbázis osztály deklarálása**
-@Database(entities = {Plant.class, OwnPlant.class}, version = 2)
+@Database(entities = {Plant.class, OwnPlant.class}, version = 3)
 public abstract class PlantDatabase extends RoomDatabase {
     // **DAO (Data Access Object) elérése**
     // Ezekkel az absztrakt metódussokkal kérhető le a PlantDao és az OwnPlantDao példánya.

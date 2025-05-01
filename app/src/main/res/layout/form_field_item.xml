@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,24 +21,10 @@
             android:minHeight="48dp" />
 
         <EditText
-            android:id="@+id/inputScientificName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Scientific Name"
-            android:minHeight="48dp" />
-
-        <EditText
             android:id="@+id/inputType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Type"
-            android:minHeight="48dp" />
-
-        <EditText
-            android:id="@+id/inputCycle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Cycle"
             android:minHeight="48dp" />
 
         <EditText
@@ -53,37 +39,31 @@
             android:id="@+id/imageSelectorLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:text="Select Image"
-            android:textStyle="bold"
-            android:layout_marginTop="8dp" />
+            android:textStyle="bold" />
 
         <LinearLayout
             android:id="@+id/imageSelectorLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
             android:gravity="center"
-            android:layout_marginTop="8dp">
-
-            <Button
-                android:id="@+id/buttonChooseTemplate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Template" />
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/buttonTakePicture"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Camera"
-                android:layout_marginStart="8dp" />
+                android:layout_marginStart="8dp"
+                android:text="Camera" />
 
             <Button
                 android:id="@+id/buttonChooseGallery"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Gallery"
-                android:layout_marginStart="8dp" />
+                android:layout_marginStart="8dp"
+                android:text="Gallery" />
         </LinearLayout>
 
         <ImageView

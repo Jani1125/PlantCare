@@ -10,28 +10,29 @@ public class OwnPlant {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String commonName;
-    private String scientificName;
     private String type;
-    private String cycle;
     private String watering;
     private String imgUrl;
     private String description;
-    private boolean isFavorite;
 
 
 
-    public OwnPlant(String commonName, String scientificName, String type, String cycle, String watering, String imgUrl,String description, boolean isFavorite) {
-        this.commonName = commonName;
-        this.scientificName = scientificName;
-        this.type = type;
-        this.cycle = cycle;
-        this.watering = watering;
-        this.imgUrl = imgUrl;
-        this.description = description;
-        this.isFavorite=isFavorite;
+
+//    public OwnPlant(String commonName, String scientificName, String type, String cycle, String watering, String imgUrl,String description) {
+//        this.commonName = commonName;
+//        this.scientificName = scientificName;
+//        this.type = type;
+//        this.cycle = cycle;
+//        this.watering = watering;
+//        this.imgUrl = imgUrl;
+//        this.description = description;
+//
+//
+//    }
+
+    public OwnPlant() {
 
     }
-
 
 
     // Getterek és setterek
@@ -50,13 +51,6 @@ public class OwnPlant {
         this.commonName = commonName;
     }
 
-    public String getScientificName() {
-        return scientificName;
-    }
-
-    public void setScientificName(String scientificName) {
-        this.scientificName = scientificName;
-    }
 
     public String getType() {
         return type;
@@ -66,13 +60,6 @@ public class OwnPlant {
         this.type = type;
     }
 
-    public String getCycle() {
-        return cycle;
-    }
-
-    public void setCycle(String cycle) {
-        this.cycle = cycle;
-    }
 
     public String getWatering() {
         return watering;
@@ -98,11 +85,4 @@ public class OwnPlant {
         this.description = description;
     }
 
-    public boolean isFavorite() {
-        return isFavorite;
-    }
-
-    public void setFavorite(boolean favorite) {
-        isFavorite = favorite;
-    }
 }

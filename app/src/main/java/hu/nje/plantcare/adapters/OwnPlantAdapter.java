@@ -23,7 +23,7 @@ public class OwnPlantAdapter extends RecyclerView.Adapter<OwnPlantAdapter.PlantV
     private OnDeleteClickListener deleteClickListener;
     public static class PlantViewHolder extends RecyclerView.ViewHolder {
         public TextView commonName;
-        public TextView scientificName;
+
         public ImageView plantImage;
         public ImageButton deleteButton;
 
@@ -31,7 +31,6 @@ public class OwnPlantAdapter extends RecyclerView.Adapter<OwnPlantAdapter.PlantV
         public PlantViewHolder(View view) {
             super(view);
             commonName = view.findViewById(R.id.plant_common_name);
-            scientificName = view.findViewById(R.id.plant_scientific_name);
             plantImage = view.findViewById(R.id.plantImageView);
             deleteButton = view.findViewById(R.id.deleteButton);
 
@@ -60,7 +59,6 @@ public class OwnPlantAdapter extends RecyclerView.Adapter<OwnPlantAdapter.PlantV
     public void onBindViewHolder(PlantViewHolder holder, int position) {
         OwnPlant currentOwnPlant = ownPlantList.get(position);
         holder.commonName.setText(currentOwnPlant.getCommonName());
-        holder.scientificName.setText(currentOwnPlant.getScientificName());
 
         Glide.with(holder.itemView.getContext())
                 .load(currentOwnPlant.getImgUrl()) // <-- Ez az URL-ed

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 
 import hu.nje.plantcare.R;
+import hu.nje.plantcare.database.Watering;
 import hu.nje.plantcare.database.entity.Plant;
 
 public class PlantDetailAdapter extends RecyclerView.Adapter<PlantDetailAdapter.PlantViewHolder>
@@ -65,7 +66,11 @@ public class PlantDetailAdapter extends RecyclerView.Adapter<PlantDetailAdapter.
         holder.scientificNameTextView.setText(plant.getScientificName());
         holder.typeTextView.setText(plant.getType());
         holder.cycleTextView.setText(plant.getCycle());
-        holder.wateringTextView.setText(plant.getWatering());
+
+        Watering frequency=Watering.getWateringInDays(plant.getWatering());
+        String watering = "Every "+frequency.getMinDays()+"-"+frequency.getMaxDays()+" days";
+        holder.wateringTextView.setText(watering);
+
         holder.favoriteSwitch.setChecked(plant.isFavorite());
         holder.favoriteSwitch.setOnClickListener(v->{
             if (clickListener != null) {

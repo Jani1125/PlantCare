@@ -1,11 +1,14 @@
 package hu.nje.plantcare.ui;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -15,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hu.nje.plantcare.R;
+import hu.nje.plantcare.adapters.NewPlantAdapter;
 import hu.nje.plantcare.adapters.OwnPlantAdapter;
 import hu.nje.plantcare.database.OwnPlantDao;
 import hu.nje.plantcare.database.PlantDatabase;
@@ -33,8 +37,11 @@ public class OwnPlantFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private OwnPlantAdapter own_adapter;
-    private List<OwnPlant> ownPlantList;
+    private NewPlantAdapter newPlant_adapter;
+    private List<OwnPlant> ownPlantList = new ArrayList<>();
     private Button newPlantButton;
+    private Button backButton;
+    private Button createButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,10 +70,63 @@ public class OwnPlantFragment extends Fragment {
 
 
         newPlantButton = view.findViewById(R.id.btn_addPlant);
+        backButton = view.findViewById(R.id.btn_Back);
+        createButton = view.findViewById(R.id.btn_Create);
+
+
         newPlantButton.setOnClickListener(v ->{
-            //Itt lesz a FormAdapter meghívva
-            // NewPlantAdapter
-            // newPlant_adapter = new NewPlantAdapter();
+            newPlant_adapter = new NewPlantAdapter(new NewPlantAdapter.OnImageActionListener(){
+                @Override
+                public void onCameraClick() {
+
+                }
+
+                @Override
+                public void onGalleryClick() {
+
+                }
+            });
+            recyclerView.setAdapter(newPlant_adapter);
+
+
+
+            newPlantButton.setVisibility(GONE);
+            backButton.setVisibility(VISIBLE);
+            createButton.setVisibility(VISIBLE);
+            }
+        );
+
+        backButton.setOnClickListener(v->{
+            recyclerView.setAdapter(own_adapter);
+            newPlantButton.setVisibility(VISIBLE);
+            backButton.setVisibility(GONE);
+            createButton.setVisibility(GONE);
+        });
+
+
+        createButton.setOnClickListener(v->{
+
+            if (newPlant_adapter != null && newPlant_adapter.isFormValid()) {
+                OwnPlant plant = newPlant_adapter.setPlantData();
+                Toast.makeText(getContext(), "All fields are valid", Toast.LENGTH_SHORT).show();
+                new Thread(() -> {
+                    ownPlantDao.insertOwnPlant(plant);
+                    ownPlantList.clear();
+                    GetAllOwnPlantFromDb();
+
+                    requireActivity().runOnUiThread(() -> {
+                        own_adapter.setOwnPlants(ownPlantList);
+                        newPlantButton.setVisibility(VISIBLE);
+                        backButton.setVisibility(GONE);
+                        createButton.setVisibility(GONE);
+                        recyclerView.setAdapter(own_adapter);
+                    });
+                }).start();
+
+            } else {
+                Toast.makeText(getContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
+            }
+
         });
 
         recyclerView = view.findViewById(R.id.ownplantrecyclerView);
@@ -94,9 +154,11 @@ public class OwnPlantFragment extends Fragment {
 
     public void DeletePlantFromDb(int id)
     {
-        new Thread(()->{
-            requireActivity().runOnUiThread(()-> {
-                ownPlantDao.deletePlant(id);
+        new Thread(() -> {
+            ownPlantDao.deletePlant(id);
+            ownPlantList = ownPlantDao.getAllOwnPlants();
+            requireActivity().runOnUiThread(() -> {
+                own_adapter.setOwnPlants(ownPlantList);
             });
         }).start();
     }
