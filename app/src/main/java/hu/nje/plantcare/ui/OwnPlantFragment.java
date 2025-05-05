@@ -3,6 +3,9 @@ package hu.nje.plantcare.ui;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -43,6 +48,13 @@ public class OwnPlantFragment extends Fragment {
     private Button backButton;
     private Button createButton;
 
+    /// Set Image/////////////////////
+    private ActivityResultLauncher<Intent> imagePickerLauncher;
+    private Uri selectedImageUri;
+    private NewPlantAdapter.OnImageActionListener imageActionListener;
+    /// ////////////////////////////
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +72,22 @@ public class OwnPlantFragment extends Fragment {
         ownPlantDao = db.ownPlantDao();
 
 
+        /// Set Image/////////////////////
+
+        imagePickerLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                        selectedImageUri = result.getData().getData();
+                        if (imageActionListener != null) {
+                            imageActionListener.onImageSelected(selectedImageUri.toString()); // Pass to adapter
+                        }
+                    }
+                }
+        );
+
+
+        /// ////////////////////////////
     }
 
     @Override
@@ -75,17 +103,25 @@ public class OwnPlantFragment extends Fragment {
 
 
         newPlantButton.setOnClickListener(v ->{
-            newPlant_adapter = new NewPlantAdapter(new NewPlantAdapter.OnImageActionListener(){
-                @Override
-                public void onCameraClick() {
 
+            imageActionListener = new NewPlantAdapter.OnImageActionListener() {
+                @Override
+                public void onSetImageClick() {
+                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                    intent.setType("image/*");
+                    imagePickerLauncher.launch(Intent.createChooser(intent, "Select Picture"));
                 }
 
                 @Override
-                public void onGalleryClick() {
-
+                public void onImageSelected(String imagePath) {
+                    // You can also pass this to the adapter or model
+                    newPlant_adapter.setImagePath(imagePath);
                 }
-            });
+            };
+
+            newPlant_adapter = new NewPlantAdapter(imageActionListener);
+
+
             recyclerView.setAdapter(newPlant_adapter);
 
 
@@ -170,5 +206,7 @@ public class OwnPlantFragment extends Fragment {
             });
         }).start();
     }
+
+
 
 }

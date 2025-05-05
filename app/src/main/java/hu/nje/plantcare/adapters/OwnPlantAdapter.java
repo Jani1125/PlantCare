@@ -63,7 +63,7 @@ public class OwnPlantAdapter extends RecyclerView.Adapter<OwnPlantAdapter.PlantV
         Glide.with(holder.itemView.getContext())
                 .load(currentOwnPlant.getImgUrl()) // <-- Ez az URL-ed
                 //.placeholder(R.drawable.placeholder) // opcionális betöltés közbeni kép
-                //.error(R.drawable.error_image)       // opcionális hiba esetén
+                .error(R.drawable.plantfavpic)       // opcionális hiba esetén
                 .into(holder.plantImage);
 
         holder.deleteButton.setOnClickListener(v->{
