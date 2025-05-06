@@ -98,7 +98,7 @@ public class FavPlantFragment extends Fragment {
             try {
                 detailed_plantList = plantDao.getAllPlants();
                 for (Plant item : detailed_plantList) {
-                    BasicPlant convert = new BasicPlant(item.id, item.commonName, item.scientificName, item.imgUrl);
+                    BasicPlant convert = new BasicPlant(item.getId(), item.getCommonName(), item.getScientificName(), item.getImgUrl());
                     plantList.add(convert);
                 }
                 requireActivity().runOnUiThread(() -> basic_adapter.notifyDataSetChanged());
@@ -119,7 +119,7 @@ public class FavPlantFragment extends Fragment {
 
             for (Plant p : detailed_plantList)
             {
-                if(p.id==selectedItemId)
+                if(p.getId()==selectedItemId)
                 {
                     plant=p;
                 }
@@ -127,9 +127,9 @@ public class FavPlantFragment extends Fragment {
             if(plant!=null)
             {
                 System.out.println("A DebugPlant által felvett értékek:");
-                System.out.println("Id: "+plant.plantId);
-                System.out.println("Common_name: "+plant.commonName);
-                System.out.println("Scientific_name: "+plant.scientificName);
+                System.out.println("Id: "+plant.getPlantId());
+                System.out.println("Common_name: "+plant.getCommonName());
+                System.out.println("Scientific_name: "+plant.getScientificName());
             }else
             {
                 System.out.println("A Debug plant null értéken maradt");
@@ -148,18 +148,18 @@ public class FavPlantFragment extends Fragment {
                         System.out.println("Meg lett nyomva a favorite switch");
 
                         //result.setFavorite(!result.isFavorite);
-                        if (!plant.isFavorite) {// Az adatokat egy új szálban mentjük el az adatbázisba
+                        if (!plant.isFavorite()) {// Az adatokat egy új szálban mentjük el az adatbázisba
                             new Thread(() -> {
                                 plantDao.insert(
                                         new Plant(
-                                                plant.plantId,
-                                                plant.commonName,
-                                                plant.scientificName,
-                                                plant.type,
-                                                plant.cycle,
-                                                plant.watering,
-                                                plant.imgUrl,
-                                                plant.description,
+                                                plant.getPlantId(),
+                                                plant.getCommonName(),
+                                                plant.getScientificName(),
+                                                plant.getType(),
+                                                plant.getCycle(),
+                                                plant.getWatering(),
+                                                plant.getImgUrl(),
+                                                plant.getDescription(),
                                                 true
                                         ));
                             }).start();

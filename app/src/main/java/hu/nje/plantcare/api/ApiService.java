@@ -15,6 +15,8 @@ import hu.nje.plantcare.database.entity.BasicPlant;
 import hu.nje.plantcare.database.entity.Plant;
 import hu.nje.plantcare.database.PlantDao;
 import hu.nje.plantcare.database.PlantDatabase;
+import hu.nje.plantcare.api.DetailResultCallBack;
+import hu.nje.plantcare.api.SearchResultCallBack;
 
 public class ApiService {
 
@@ -72,14 +74,8 @@ public class ApiService {
 
         System.out.println("Megtörtént az API hívás");
     }
-    public interface DetailResultCallBack{
-        void onResult(Plant result);
-    }
-    public interface SearchResultCallback {
-        void onResult(List<BasicPlant> results);
-    }
 
-    public static void SearchApiRequest(Context context, String keyword, String API_KEY, String baseURL, SearchResultCallback callback) {
+    public static void SearchApiRequest(Context context, String keyword, String API_KEY, String baseURL,  SearchResultCallBack callback) {
         String search_url = baseURL + "key=" + API_KEY + "&q=" + keyword;
         List<BasicPlant> results = new ArrayList<>();
 

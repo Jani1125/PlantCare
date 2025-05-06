@@ -45,11 +45,6 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout menuLayout;
     private boolean isMenuVisible = false;
 
-    //////////// API kulcs és az API URL alapja  /////////////////////////
-    private static final String API_KEY = "sk-MzET67d004cc29a259082";
-    private static final String baseUrl = "https://perenual.com/api/v2/species/details/";
-
-    /// //////////////////////////////////////////////////////////////////
 
 
 

@@ -13,16 +13,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.material.slider.Slider;
 
 import hu.nje.plantcare.R;
+import hu.nje.plantcare.database.Watering;
 import hu.nje.plantcare.database.entity.Plant;
 
 public class PlantDetailAdapter extends RecyclerView.Adapter<PlantDetailAdapter.PlantViewHolder>
 {
 
-    private OnFavoriteClickListener clickListener;
-    private OnBackClickListener backListener;
+    private final OnFavoriteClickListener clickListener;
+    private final OnBackClickListener backListener;
 
     private Plant plant;
 
@@ -43,7 +43,7 @@ public class PlantDetailAdapter extends RecyclerView.Adapter<PlantDetailAdapter.
     public PlantViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.searched_item_details, parent, false);
+                .inflate(R.layout.plant_item_details, parent, false);
         return new PlantViewHolder(itemView);
     }
 
@@ -64,10 +64,14 @@ public class PlantDetailAdapter extends RecyclerView.Adapter<PlantDetailAdapter.
 
         holder.commonNameTextView.setText(plant.getCommonName());
         holder.scientificNameTextView.setText(plant.getScientificName());
-        holder.typeTextView.setText(plant.type);
-        holder.cycleTextView.setText(plant.cycle);
-        holder.wateringTextView.setText(plant.watering);
-        holder.favoriteSwitch.setChecked(plant.isFavorite);
+        holder.typeTextView.setText(plant.getType());
+        holder.cycleTextView.setText(plant.getCycle());
+
+        Watering frequency=Watering.getWateringInDays(plant.getWatering());
+        String watering = "Every "+frequency.getMinDays()+"-"+frequency.getMaxDays()+" days";
+        holder.wateringTextView.setText(watering);
+
+        holder.favoriteSwitch.setChecked(plant.isFavorite());
         holder.favoriteSwitch.setOnClickListener(v->{
             if (clickListener != null) {
                 clickListener.OnFavoriteClick();
@@ -76,7 +80,7 @@ public class PlantDetailAdapter extends RecyclerView.Adapter<PlantDetailAdapter.
 //                holder.favoriteSwitch.setChecked(plant.isFavorite);
             }
         });
-        holder.descriptionTextView.setText(plant.description);
+        holder.descriptionTextView.setText(plant.getDescription());
 
     }
 
