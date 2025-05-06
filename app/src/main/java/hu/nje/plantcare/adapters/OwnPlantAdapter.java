@@ -16,19 +16,20 @@ import java.util.List;
 import hu.nje.plantcare.R;
 import hu.nje.plantcare.database.entity.OwnPlant;
 
-public class OwnPlantAdapter extends RecyclerView.Adapter<OwnPlantAdapter.PlantViewHolder> {
+public class OwnPlantAdapter extends RecyclerView.Adapter<OwnPlantAdapter.OwnPlantViewHolder> {
 
     private List<OwnPlant> ownPlantList;
 
-    private OnDeleteClickListener deleteClickListener;
-    public static class PlantViewHolder extends RecyclerView.ViewHolder {
-        public TextView commonName;
+    private final OnDeleteClickListener deleteClickListener;
+    private final OnOwnPlantClickListener onOwnPlantClickListener;
+    public static class OwnPlantViewHolder extends RecyclerView.ViewHolder {
+        private final TextView commonName;
 
-        public ImageView plantImage;
-        public ImageButton deleteButton;
+        private final ImageView plantImage;
+        private final ImageButton deleteButton;
 
 
-        public PlantViewHolder(View view) {
+        public OwnPlantViewHolder(View view) {
             super(view);
             commonName = view.findViewById(R.id.plant_common_name);
             plantImage = view.findViewById(R.id.plantImageView);
@@ -37,10 +38,11 @@ public class OwnPlantAdapter extends RecyclerView.Adapter<OwnPlantAdapter.PlantV
         }
     }
 
-    public OwnPlantAdapter(List<OwnPlant> ownPlants, OnDeleteClickListener deleteClickListener)
+    public OwnPlantAdapter(List<OwnPlant> ownPlants, OnDeleteClickListener deleteClickListener, OnOwnPlantClickListener onOwnPlantClickListener)
     {
         this.ownPlantList = ownPlants;
         this.deleteClickListener = deleteClickListener;
+        this.onOwnPlantClickListener = onOwnPlantClickListener;
     }
     public void setOwnPlants(List<OwnPlant> ownPlants)
     {
@@ -49,14 +51,14 @@ public class OwnPlantAdapter extends RecyclerView.Adapter<OwnPlantAdapter.PlantV
     }
 
     @Override
-    public PlantViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public OwnPlantViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.own_plant_item, parent, false);
-        return new PlantViewHolder(view);
+        return new OwnPlantViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(PlantViewHolder holder, int position) {
+    public void onBindViewHolder(OwnPlantViewHolder holder, int position) {
         OwnPlant currentOwnPlant = ownPlantList.get(position);
         holder.commonName.setText(currentOwnPlant.getCommonName());
 
@@ -70,6 +72,12 @@ public class OwnPlantAdapter extends RecyclerView.Adapter<OwnPlantAdapter.PlantV
             if(deleteClickListener!=null) deleteClickListener.OnDeleteClick(currentOwnPlant.getId());
         });
 
+        holder.itemView.setOnClickListener(v->{
+            if(onOwnPlantClickListener!=null){
+                onOwnPlantClickListener.onOwnPlantClick(currentOwnPlant.getId());
+            }
+        });
+
     }
 
     @Override
@@ -80,5 +88,9 @@ public class OwnPlantAdapter extends RecyclerView.Adapter<OwnPlantAdapter.PlantV
     public interface OnDeleteClickListener
     {
         void OnDeleteClick(int ownPlantId);
+    }
+
+    public interface OnOwnPlantClickListener {
+        void onOwnPlantClick(int plantId);
     }
 }

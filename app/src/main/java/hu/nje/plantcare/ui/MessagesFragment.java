@@ -34,7 +34,6 @@ public class MessagesFragment extends Fragment {
         menuItems.add("Own plants");
         menuItems.add("Plant scanner");
         menuItems.add("Settings");
-        menuItems.add("Plant details");
         menuItems.add("Notifications");
     }
 

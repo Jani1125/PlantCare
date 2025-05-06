@@ -21,8 +21,8 @@ import hu.nje.plantcare.database.entity.Plant;
 public class PlantDetailAdapter extends RecyclerView.Adapter<PlantDetailAdapter.PlantViewHolder>
 {
 
-    private OnFavoriteClickListener clickListener;
-    private OnBackClickListener backListener;
+    private final OnFavoriteClickListener clickListener;
+    private final OnBackClickListener backListener;
 
     private Plant plant;
 

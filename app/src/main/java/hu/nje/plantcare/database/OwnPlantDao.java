@@ -16,6 +16,8 @@ public interface OwnPlantDao {
     @Query("SELECT * FROM own_plants")
     List<OwnPlant> getAllOwnPlants();
 
+    @Query("SELECT * FROM own_plants WHERE id = :selectedPlantId")
+    OwnPlant getOwnPlant(int selectedPlantId);
     @Query("DELETE FROM own_plants")
     void deleteAllOwnPlants();
 

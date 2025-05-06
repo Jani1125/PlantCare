@@ -25,6 +25,7 @@ import java.util.List;
 import hu.nje.plantcare.R;
 import hu.nje.plantcare.adapters.NewPlantAdapter;
 import hu.nje.plantcare.adapters.OwnPlantAdapter;
+import hu.nje.plantcare.adapters.OwnPlantDetailsAdapter;
 import hu.nje.plantcare.database.OwnPlantDao;
 import hu.nje.plantcare.database.PlantDatabase;
 import hu.nje.plantcare.database.entity.OwnPlant;
@@ -42,8 +43,10 @@ public class OwnPlantFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private OwnPlantAdapter own_adapter;
+    private OwnPlantDetailsAdapter own_details_adapter;
     private NewPlantAdapter newPlant_adapter;
     private List<OwnPlant> ownPlantList = new ArrayList<>();
+    private OwnPlant ownPlant;
     private Button newPlantButton;
     private Button backButton;
     private Button createButton;
@@ -53,7 +56,6 @@ public class OwnPlantFragment extends Fragment {
     private Uri selectedImageUri;
     private NewPlantAdapter.OnImageActionListener imageActionListener;
     /// ////////////////////////////
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,11 +80,17 @@ public class OwnPlantFragment extends Fragment {
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
-                        selectedImageUri = result.getData().getData();
+                        Uri uri = result.getData().getData();
+                        requireContext().getContentResolver().takePersistableUriPermission(
+                                uri,
+                                Intent.FLAG_GRANT_READ_URI_PERMISSION
+                        );
+                        selectedImageUri = uri;
                         if (imageActionListener != null) {
-                            imageActionListener.onImageSelected(selectedImageUri.toString()); // Pass to adapter
+                            imageActionListener.onImageSelected(uri.toString());
                         }
                     }
+
                 }
         );
 
@@ -107,9 +115,12 @@ public class OwnPlantFragment extends Fragment {
             imageActionListener = new NewPlantAdapter.OnImageActionListener() {
                 @Override
                 public void onSetImageClick() {
-                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                     intent.setType("image/*");
-                    imagePickerLauncher.launch(Intent.createChooser(intent, "Select Picture"));
+                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+                    imagePickerLauncher.launch(intent);
+
                 }
 
                 @Override
@@ -170,7 +181,14 @@ public class OwnPlantFragment extends Fragment {
         own_adapter = new OwnPlantAdapter(ownPlantList, new OwnPlantAdapter.OnDeleteClickListener() {
             @Override
             public void OnDeleteClick(int ownPlantId) {
+
                 DeletePlantFromDb(ownPlantId);
+            }
+        }, new OwnPlantAdapter.OnOwnPlantClickListener() {
+            @Override
+            public void onOwnPlantClick(int plantId) {
+
+                GetOwnPlantDetailsFromDb(plantId);
             }
         });
         recyclerView.setAdapter(own_adapter);
@@ -188,7 +206,7 @@ public class OwnPlantFragment extends Fragment {
         return view;
     }
 
-    public void DeletePlantFromDb(int id)
+    private void DeletePlantFromDb(int id)
     {
         new Thread(() -> {
             ownPlantDao.deletePlant(id);
@@ -198,7 +216,7 @@ public class OwnPlantFragment extends Fragment {
             });
         }).start();
     }
-    public void GetAllOwnPlantFromDb() {
+    private void GetAllOwnPlantFromDb() {
         new Thread(() -> {
             ownPlantList = ownPlantDao.getAllOwnPlants();  // Run in background
             requireActivity().runOnUiThread(() -> {
@@ -206,7 +224,29 @@ public class OwnPlantFragment extends Fragment {
             });
         }).start();
     }
+    private void GetOwnPlantDetailsFromDb(int selectedItemId)
+    {
+        System.out.println("Meg lett nyomva a saját növény, a hozzá tartozó id: "+selectedItemId);
+        ownPlantDao = db.ownPlantDao();
 
+        new Thread(()->{
+            ownPlant = ownPlantDao.getOwnPlant(selectedItemId);
+            System.out.println("A megnyomott növény neve: "+ownPlant.getCommonName());
+            if(ownPlant!=null)
+            {
+                requireActivity().runOnUiThread(()->{
+                    own_details_adapter = new OwnPlantDetailsAdapter(ownPlant, new OwnPlantDetailsAdapter.OnBackClickListener() {
+                        @Override
+                        public void OnBackClick() {
+                            recyclerView.setAdapter(own_adapter);
+                        }
+                    });
+                   own_details_adapter.setOwnPlant(ownPlant);
+                   recyclerView.setAdapter(own_details_adapter);
+                });
+            }
+        }).start();
+    }
 
 
 }
