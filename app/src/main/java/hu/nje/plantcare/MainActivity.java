@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Az adatok tárolására használt StringBuilder
     StringBuilder details = new StringBuilder();
-    private static boolean hasPopupBeenShown = false;
+
     private static final String PREF_DARK_MODE = "dark_mode";
 
     @Override
@@ -88,11 +88,6 @@ public class MainActivity extends AppCompatActivity {
         menuItems.add("Settings");
         menuItems.add("Notifications");
 
-        if (!hasPopupBeenShown) {
-            showWaterReminderPopup();
-            hasPopupBeenShown= true;
-        }
-
 
         MenuManager.setupMenu(
                 this,
@@ -104,15 +99,4 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    private void showWaterReminderPopup() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View view = getLayoutInflater().inflate(R.layout.popup_message, null);
-        builder.setView(view);
-
-        builder.setPositiveButton("OK", (dialog, which) -> dialog.dismiss());
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
 }

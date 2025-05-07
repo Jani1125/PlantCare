@@ -46,7 +46,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         Notification currentNotification = notificationList.get(position);
         holder.notificationPlantName.setText(currentNotification.getPlantName());
         holder.notificationTime.setText(sdf.format(currentNotification.getNotificationTime()));
-        holder.notificationStatus.setText(currentNotification.isDelivered() ? "Állapot: Kiküldve" : "Állapot: Ütemezve");
+        holder.notificationStatus.setText(currentNotification.isDelivered() ? "Status: Sent" : "Status: Scheduled");
 
         // Kép betöltése, ha van URL
         if (currentNotification.getPlantImageUrl() != null && !currentNotification.getPlantImageUrl().isEmpty()) {
