@@ -29,18 +29,13 @@ import hu.nje.plantcare.adapters.OwnPlantDetailsAdapter;
 import hu.nje.plantcare.database.OwnPlantDao;
 import hu.nje.plantcare.database.PlantDatabase;
 import hu.nje.plantcare.database.entity.OwnPlant;
+import hu.nje.plantcare.utils.NotificationScheduler;
 
 public class OwnPlantFragment extends Fragment {
 
     private List<String> menuItems;
-
-    public OwnPlantFragment() {
-        // Required empty public constructor
-    }
-
     private PlantDatabase db;
     private OwnPlantDao ownPlantDao;
-
     private RecyclerView recyclerView;
     private OwnPlantAdapter own_adapter;
     private OwnPlantDetailsAdapter own_details_adapter;
@@ -50,12 +45,13 @@ public class OwnPlantFragment extends Fragment {
     private Button newPlantButton;
     private Button backButton;
     private Button createButton;
-
-    /// Set Image/////////////////////
     private ActivityResultLauncher<Intent> imagePickerLauncher;
     private Uri selectedImageUri;
     private NewPlantAdapter.OnImageActionListener imageActionListener;
-    /// ////////////////////////////
+
+    public OwnPlantFragment() {
+        // Required empty public constructor
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,9 +69,6 @@ public class OwnPlantFragment extends Fragment {
         db = PlantDatabase.getDatabase(requireContext());
         ownPlantDao = db.ownPlantDao();
 
-
-        /// Set Image/////////////////////
-
         imagePickerLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -90,12 +83,8 @@ public class OwnPlantFragment extends Fragment {
                             imageActionListener.onImageSelected(uri.toString());
                         }
                     }
-
                 }
         );
-
-
-        /// ////////////////////////////
     }
 
     @Override
@@ -104,14 +93,27 @@ public class OwnPlantFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_own_plant, container, false);
 
-
         newPlantButton = view.findViewById(R.id.btn_addPlant);
         backButton = view.findViewById(R.id.btn_Back);
         createButton = view.findViewById(R.id.btn_Create);
+        recyclerView = view.findViewById(R.id.ownplantrecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        own_adapter = new OwnPlantAdapter(ownPlantList, new OwnPlantAdapter.OnDeleteClickListener() {
+            @Override
+            public void OnDeleteClick(int ownPlantId) {
+                NotificationScheduler.cancelWatering(requireContext(), ownPlantId);
+                DeletePlantFromDb(ownPlantId);
+            }
+        }, new OwnPlantAdapter.OnOwnPlantClickListener() {
+            @Override
+            public void onOwnPlantClick(int plantId) {
+                GetOwnPlantDetailsFromDb(plantId);
+            }
+        });
+        recyclerView.setAdapter(own_adapter);
+        GetAllOwnPlantFromDb();
 
-
-        newPlantButton.setOnClickListener(v ->{
-
+        newPlantButton.setOnClickListener(v -> {
             imageActionListener = new NewPlantAdapter.OnImageActionListener() {
                 @Override
                 public void onSetImageClick() {
@@ -120,44 +122,42 @@ public class OwnPlantFragment extends Fragment {
                     intent.addCategory(Intent.CATEGORY_OPENABLE);
                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
                     imagePickerLauncher.launch(intent);
-
                 }
 
                 @Override
                 public void onImageSelected(String imagePath) {
-                    // You can also pass this to the adapter or model
                     newPlant_adapter.setImagePath(imagePath);
                 }
             };
 
             newPlant_adapter = new NewPlantAdapter(imageActionListener);
-
-
             recyclerView.setAdapter(newPlant_adapter);
-
-
-
             newPlantButton.setVisibility(GONE);
             backButton.setVisibility(VISIBLE);
             createButton.setVisibility(VISIBLE);
-            }
-        );
+        });
 
-        backButton.setOnClickListener(v->{
+        backButton.setOnClickListener(v -> {
             recyclerView.setAdapter(own_adapter);
             newPlantButton.setVisibility(VISIBLE);
             backButton.setVisibility(GONE);
             createButton.setVisibility(GONE);
         });
 
-
-        createButton.setOnClickListener(v->{
-
+        createButton.setOnClickListener(v -> {
             if (newPlant_adapter != null && newPlant_adapter.isFormValid()) {
                 OwnPlant plant = newPlant_adapter.setPlantData();
                 Toast.makeText(getContext(), "All fields are valid", Toast.LENGTH_SHORT).show();
                 new Thread(() -> {
-                    ownPlantDao.insertOwnPlant(plant);
+                    long insertedId = ownPlantDao.insertOwnPlant(plant); // Most már long-ot ad vissza
+                    if (insertedId > 0) {
+                        NotificationScheduler.scheduleWatering(
+                                requireContext(),
+                                (int) insertedId,
+                                plant.getCommonName(),
+                                plant.getWatering()
+                        );
+                    }
                     ownPlantList.clear();
                     GetAllOwnPlantFromDb();
 
@@ -169,32 +169,11 @@ public class OwnPlantFragment extends Fragment {
                         recyclerView.setAdapter(own_adapter);
                     });
                 }).start();
-
             } else {
                 Toast.makeText(getContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
             }
-
         });
 
-        recyclerView = view.findViewById(R.id.ownplantrecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        own_adapter = new OwnPlantAdapter(ownPlantList, new OwnPlantAdapter.OnDeleteClickListener() {
-            @Override
-            public void OnDeleteClick(int ownPlantId) {
-
-                DeletePlantFromDb(ownPlantId);
-            }
-        }, new OwnPlantAdapter.OnOwnPlantClickListener() {
-            @Override
-            public void onOwnPlantClick(int plantId) {
-
-                GetOwnPlantDetailsFromDb(plantId);
-            }
-        });
-        recyclerView.setAdapter(own_adapter);
-        GetAllOwnPlantFromDb();
-
-        // Itt hívjuk meg a közös menü beállítást
         MenuManager.setupMenu(
                 (AppCompatActivity) requireActivity(),
                 menuItems,
@@ -206,8 +185,7 @@ public class OwnPlantFragment extends Fragment {
         return view;
     }
 
-    private void DeletePlantFromDb(int id)
-    {
+    private void DeletePlantFromDb(int id) {
         new Thread(() -> {
             ownPlantDao.deletePlant(id);
             ownPlantList = ownPlantDao.getAllOwnPlants();
@@ -216,37 +194,35 @@ public class OwnPlantFragment extends Fragment {
             });
         }).start();
     }
+
     private void GetAllOwnPlantFromDb() {
         new Thread(() -> {
-            ownPlantList = ownPlantDao.getAllOwnPlants();  // Run in background
+            ownPlantList = ownPlantDao.getAllOwnPlants();
             requireActivity().runOnUiThread(() -> {
-                own_adapter.setOwnPlants(ownPlantList);     // Update UI
+                own_adapter.setOwnPlants(ownPlantList);
             });
         }).start();
     }
-    private void GetOwnPlantDetailsFromDb(int selectedItemId)
-    {
-        System.out.println("Meg lett nyomva a saját növény, a hozzá tartozó id: "+selectedItemId);
+
+    private void GetOwnPlantDetailsFromDb(int selectedItemId) {
+        System.out.println("Meg lett nyomva a saját növény, a hozzá tartozó id: " + selectedItemId);
         ownPlantDao = db.ownPlantDao();
 
-        new Thread(()->{
+        new Thread(() -> {
             ownPlant = ownPlantDao.getOwnPlant(selectedItemId);
-            System.out.println("A megnyomott növény neve: "+ownPlant.getCommonName());
-            if(ownPlant!=null)
-            {
-                requireActivity().runOnUiThread(()->{
+            System.out.println("A megnyomott növény neve: " + ownPlant.getCommonName());
+            if (ownPlant != null) {
+                requireActivity().runOnUiThread(() -> {
                     own_details_adapter = new OwnPlantDetailsAdapter(ownPlant, new OwnPlantDetailsAdapter.OnBackClickListener() {
                         @Override
                         public void OnBackClick() {
                             recyclerView.setAdapter(own_adapter);
                         }
                     });
-                   own_details_adapter.setOwnPlant(ownPlant);
-                   recyclerView.setAdapter(own_details_adapter);
+                    own_details_adapter.setOwnPlant(ownPlant);
+                    recyclerView.setAdapter(own_details_adapter);
                 });
             }
         }).start();
     }
-
-
 }

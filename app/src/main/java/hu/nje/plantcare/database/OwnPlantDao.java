@@ -11,13 +11,14 @@ import hu.nje.plantcare.database.entity.OwnPlant;
 @Dao
 public interface OwnPlantDao {
     @Insert
-    void insertOwnPlant(OwnPlant ownPlant);
+    long insertOwnPlant(OwnPlant ownPlant); // Visszatérési típus long-ra változtatva
 
     @Query("SELECT * FROM own_plants")
     List<OwnPlant> getAllOwnPlants();
 
     @Query("SELECT * FROM own_plants WHERE id = :selectedPlantId")
     OwnPlant getOwnPlant(int selectedPlantId);
+
     @Query("DELETE FROM own_plants")
     void deleteAllOwnPlants();
 

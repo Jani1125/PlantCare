@@ -23,7 +23,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Öntözz meg!"
+            android:text="Watering!"
             android:textSize="18sp"
             android:textStyle="bold"/>
 
@@ -31,7 +31,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ne felejts el ma locsolni!"
+            android:text="Don't forget to water your plant!"
             android:textSize="14sp"/>
 
     </LinearLayout>

@@ -2,38 +2,34 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:padding="16dp"
-    android:background="@drawable/radius_background">
+    android:background="@drawable/radius_background"
+    android:layout_marginBottom="8dp">
 
-    <!-- Szöveg + ikon jobb oldalt -->
-    <LinearLayout
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/notificationPlantName"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:text="Plant name" />
 
-        <!-- Szövegek -->
-        <TextView
-            android:id="@+id/messages"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Messages"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/black" />
+    <TextView
+        android:id="@+id/notificationTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:text="Notification time"
+        android:layout_marginTop="4dp" />
 
-        <!-- Középre igazított ikon -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:layout_marginTop="8dp">
-
-
-        </LinearLayout>
-
-    </LinearLayout>
+    <TextView
+        android:id="@+id/notificationStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:text="Status: Sent"
+        android:layout_marginTop="4dp" />
 
 </LinearLayout>
