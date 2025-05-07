@@ -17,7 +17,7 @@ public class NotificationScheduler {
     private static final String TAG = "NotificationScheduler";
     private static final String WATERING_REMINDER_ACTION = "hu.nje.plantcare.ACTION_WATERING_REMINDER";
 
-    public static void scheduleWatering(Context context, int plantId, String plantName, String wateringFrequency) {
+    public static void scheduleWatering(Context context, int plantId, String plantName, String wateringFrequency, String plantImageUrl) {
         long triggerAtMillis = calculateTriggerTime(wateringFrequency);
 
         if (triggerAtMillis == -1) {
@@ -25,7 +25,6 @@ public class NotificationScheduler {
             return;
         }
 
-        // Az első értesítést a hozzáadás időpontjától számítva ütemezzük
         long firstNotificationTime = System.currentTimeMillis() + triggerAtMillis;
 
         Intent notificationIntent = new Intent(context, PlantWateringReceiver.class);
@@ -33,7 +32,6 @@ public class NotificationScheduler {
         notificationIntent.putExtra("plantId", plantId);
         notificationIntent.putExtra("plantName", plantName);
 
-        // Egyedi PendingIntent kérékkód a növény ID-ja alapján, hogy később törölni tudjuk
         int requestCode = plantId;
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context,
@@ -52,12 +50,13 @@ public class NotificationScheduler {
             );
             Log.i(TAG, "Locsolási értesítés ütemezve a(z) " + plantName + " nevű növényhez " + wateringFrequency + " gyakorisággal. Első értesítés időpontja: " + Calendar.getInstance().getTimeInMillis());
 
-            // Értesítés adatainak mentése az adatbázisba
+            // Értesítés adatainak mentése az adatbázisba, beleértve a kép URL-jét
             PlantDatabase db = PlantDatabase.getDatabase(context);
             Notification notification = new Notification();
             notification.setPlantId(plantId);
             notification.setPlantName(plantName);
             notification.setNotificationTime(firstNotificationTime);
+            notification.setPlantImageUrl(plantImageUrl); // Elmentjük a kép URL-jét
             db.notificationDao().insertNotification(notification);
 
         } else {
@@ -92,15 +91,15 @@ public class NotificationScheduler {
     private static long calculateTriggerTime(String wateringFrequency) {
         switch (wateringFrequency) {
             case "frequent":
-                return TimeUnit.DAYS.toMillis(2); // Példa: 2 naponta
+                return TimeUnit.DAYS.toMillis(2);
             case "average":
-                return TimeUnit.DAYS.toMillis(5); // Példa: 5 naponta
+                return TimeUnit.DAYS.toMillis(5);
             case "minimum":
-                return TimeUnit.DAYS.toMillis(10); // Példa: 10 naponta
+                return TimeUnit.DAYS.toMillis(10);
             case "none":
-                return -1; // Nincs emlékeztető
+                return -1;
             default:
-                return -1; // Érvénytelen érték
+                return -1;
         }
     }
 }

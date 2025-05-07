@@ -10,7 +10,7 @@ import hu.nje.plantcare.database.entity.Notification;
 import hu.nje.plantcare.database.entity.OwnPlant;
 import hu.nje.plantcare.database.entity.Plant;
 
-@Database(entities = {Plant.class, OwnPlant.class, Notification.class}, version = 5) // Verziót 5-re növeltük
+@Database(entities = {Plant.class, OwnPlant.class, Notification.class}, version = 6) // Verziót 6-ra növeltük
 public abstract class PlantDatabase extends RoomDatabase {
     public abstract PlantDao plantDao();
     public abstract OwnPlantDao ownPlantDao();

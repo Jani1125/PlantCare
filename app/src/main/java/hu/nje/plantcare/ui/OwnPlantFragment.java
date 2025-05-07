@@ -101,7 +101,7 @@ public class OwnPlantFragment extends Fragment {
         own_adapter = new OwnPlantAdapter(ownPlantList, new OwnPlantAdapter.OnDeleteClickListener() {
             @Override
             public void OnDeleteClick(int ownPlantId) {
-                NotificationScheduler.cancelWatering(requireContext(), ownPlantId);
+                NotificationScheduler.cancelWatering(requireContext(), ownPlantId); // Javítva
                 DeletePlantFromDb(ownPlantId);
             }
         }, new OwnPlantAdapter.OnOwnPlantClickListener() {
@@ -149,13 +149,14 @@ public class OwnPlantFragment extends Fragment {
                 OwnPlant plant = newPlant_adapter.setPlantData();
                 Toast.makeText(getContext(), "All fields are valid", Toast.LENGTH_SHORT).show();
                 new Thread(() -> {
-                    long insertedId = ownPlantDao.insertOwnPlant(plant); // Most már long-ot ad vissza
+                    long insertedId = ownPlantDao.insertOwnPlant(plant);
                     if (insertedId > 0) {
                         NotificationScheduler.scheduleWatering(
                                 requireContext(),
                                 (int) insertedId,
                                 plant.getCommonName(),
-                                plant.getWatering()
+                                plant.getWatering(),
+                                plant.getImgUrl()
                         );
                     }
                     ownPlantList.clear();

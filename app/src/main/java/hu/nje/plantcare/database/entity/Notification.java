@@ -8,10 +8,11 @@ public class Notification {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
-    private int plantId; // Az értesítéshez tartozó növény ID-ja
-    private String plantName; // A növény neve az értesítésben
-    private long notificationTime; // Az értesítés beütemezett időpontja
-    private boolean isDelivered; // Jelzi, hogy az értesítés ki lett-e küldve
+    private int plantId;
+    private String plantName;
+    private long notificationTime;
+    private boolean isDelivered;
+    private String plantImageUrl; // Új mező a kép URL-jéhez
 
     public Notification() {
     }
@@ -54,5 +55,13 @@ public class Notification {
 
     public void setDelivered(boolean delivered) {
         isDelivered = delivered;
+    }
+
+    public String getPlantImageUrl() {
+        return plantImageUrl;
+    }
+
+    public void setPlantImageUrl(String plantImageUrl) {
+        this.plantImageUrl = plantImageUrl;
     }
 }

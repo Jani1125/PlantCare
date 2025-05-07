@@ -3,10 +3,14 @@ package hu.nje.plantcare.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -43,6 +47,17 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         holder.notificationPlantName.setText(currentNotification.getPlantName());
         holder.notificationTime.setText(sdf.format(currentNotification.getNotificationTime()));
         holder.notificationStatus.setText(currentNotification.isDelivered() ? "Állapot: Kiküldve" : "Állapot: Ütemezve");
+
+        // Kép betöltése, ha van URL
+        if (currentNotification.getPlantImageUrl() != null && !currentNotification.getPlantImageUrl().isEmpty()) {
+            Glide.with(holder.itemView.getContext())
+                    .load(currentNotification.getPlantImageUrl())
+                    .apply(new RequestOptions().placeholder(R.drawable.plant_placeholder).error(R.drawable.plant_placeholder))
+                    .into(holder.notificationPlantImage);
+        } else {
+            // Ha nincs kép URL, akkor a plantfavpic.png-t jelenítjük meg
+            holder.notificationPlantImage.setImageResource(R.drawable.plantfavpic);
+        }
     }
 
     @Override
@@ -51,12 +66,14 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     }
 
     public static class NotificationViewHolder extends RecyclerView.ViewHolder {
+        ImageView notificationPlantImage;
         TextView notificationPlantName;
         TextView notificationTime;
         TextView notificationStatus;
 
         public NotificationViewHolder(@NonNull View itemView) {
             super(itemView);
+            notificationPlantImage = itemView.findViewById(R.id.notificationPlantImage);
             notificationPlantName = itemView.findViewById(R.id.notificationPlantName);
             notificationTime = itemView.findViewById(R.id.notificationTime);
             notificationStatus = itemView.findViewById(R.id.notificationStatus);
