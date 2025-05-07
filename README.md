@@ -9,6 +9,6 @@ Funkciók:
 - Kedvencek listája
 - Offline mód (Room adatbázis)
 - Modern UI – Dark/Light mód
-- Növényfelismerés (opcionális)
+- Növényfelismerés
 
 Fejlesztők: Mixtaj Flóra, Bitó Tamás, Orsós János
