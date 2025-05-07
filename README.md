@@ -5,10 +5,10 @@ Funkciók:
 - Növények listázása és keresése
 - Részletes növényápolási információk
 - Saját növények hozzáadása és kezelése
-- Öntözési és tápanyag-utánpótlási emlékeztetők
+- Öntözési emlékeztetők
 - Kedvencek listája
 - Offline mód (Room adatbázis)
-- Modern UI – Dark/Light mód
+- Modern UI – Light/Dark mód
 - Növényfelismerés
 
 Fejlesztők: Mixtaj Flóra, Bitó Tamás, Orsós János
