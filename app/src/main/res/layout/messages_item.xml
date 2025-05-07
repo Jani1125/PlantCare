@@ -4,35 +4,47 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="16dp"
-    android:background="@drawable/radius_background">
+    android:background="@drawable/radius_background"
+    android:layout_marginBottom="8dp">
 
-    <!-- Szöveg + ikon jobb oldalt -->
+    <ImageView
+        android:id="@+id/notificationPlantImage"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/plant_placeholder"
+        android:layout_marginEnd="16dp" />
+
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <!-- Szövegek -->
         <TextView
-            android:id="@+id/messages"
+            android:id="@+id/notificationPlantName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Messages"
-            android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="@android:color/black" />
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:text="Növény neve" />
 
-        <!-- Középre igazított ikon -->
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/notificationTime"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:layout_marginTop="8dp">
+            android:textSize="14sp"
+            android:text="Értesítés időpontja"
+            android:layout_marginTop="4dp" />
 
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/notificationStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:text="Status: Sent"
+            android:layout_marginTop="4dp" />
 
     </LinearLayout>
 
