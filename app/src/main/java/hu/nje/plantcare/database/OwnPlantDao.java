@@ -1,8 +1,10 @@
 package hu.nje.plantcare.database;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -24,4 +26,8 @@ public interface OwnPlantDao {
 
     @Query("DELETE FROM own_plants WHERE id = :id")
     void deletePlant(int id);
+
+    // Új metódus a növény ID-k lekérdezéséhez:
+    @Query("SELECT id FROM own_plants")
+    List<Integer> getAllOwnPlantIds();
 }

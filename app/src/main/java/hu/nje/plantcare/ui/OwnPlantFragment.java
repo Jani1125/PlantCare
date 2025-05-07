@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.preference.PreferenceManager;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +51,7 @@ public class OwnPlantFragment extends Fragment {
     private ActivityResultLauncher<Intent> imagePickerLauncher;
     private Uri selectedImageUri;
     private NewPlantAdapter.OnImageActionListener imageActionListener;
+    private static final String PREF_NOTIFICATIONS_ENABLED = "notifications_enabled";
 
     public OwnPlantFragment() {
         // Required empty public constructor
@@ -101,7 +105,7 @@ public class OwnPlantFragment extends Fragment {
         own_adapter = new OwnPlantAdapter(ownPlantList, new OwnPlantAdapter.OnDeleteClickListener() {
             @Override
             public void OnDeleteClick(int ownPlantId) {
-                NotificationScheduler.cancelWatering(requireContext(), ownPlantId); // Javítva
+                NotificationScheduler.cancelWatering(requireContext(), ownPlantId);
                 DeletePlantFromDb(ownPlantId);
             }
         }, new OwnPlantAdapter.OnOwnPlantClickListener() {
@@ -151,13 +155,19 @@ public class OwnPlantFragment extends Fragment {
                 new Thread(() -> {
                     long insertedId = ownPlantDao.insertOwnPlant(plant);
                     if (insertedId > 0) {
-                        NotificationScheduler.scheduleWatering(
-                                requireContext(),
-                                (int) insertedId,
-                                plant.getCommonName(),
-                                plant.getWatering(),
-                                plant.getImgUrl()
-                        );
+                        boolean areNotificationsEnabled = PreferenceManager.getDefaultSharedPreferences(requireContext())
+                                .getBoolean(PREF_NOTIFICATIONS_ENABLED, true);
+                        if (areNotificationsEnabled) {
+                            NotificationScheduler.scheduleWatering(
+                                    requireContext(),
+                                    (int) insertedId,
+                                    plant.getCommonName(),
+                                    plant.getWatering(),
+                                    plant.getImgUrl()
+                            );
+                        } else {
+                            Log.i("OwnPlantFragment", "Értesítések le vannak tiltva, nem ütemezünk a(z) " + plant.getCommonName() + " nevű növényhez.");
+                        }
                     }
                     ownPlantList.clear();
                     GetAllOwnPlantFromDb();

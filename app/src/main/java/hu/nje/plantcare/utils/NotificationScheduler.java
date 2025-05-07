@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import androidx.preference.PreferenceManager;
+
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
@@ -16,8 +18,17 @@ public class NotificationScheduler {
 
     private static final String TAG = "NotificationScheduler";
     private static final String WATERING_REMINDER_ACTION = "hu.nje.plantcare.ACTION_WATERING_REMINDER";
+    private static final String PREF_NOTIFICATIONS_ENABLED = "notifications_enabled";
 
     public static void scheduleWatering(Context context, int plantId, String plantName, String wateringFrequency, String plantImageUrl) {
+        boolean areNotificationsEnabled = PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(PREF_NOTIFICATIONS_ENABLED, true);
+
+        if (!areNotificationsEnabled) {
+            Log.i(TAG, "Értesítések globálisan le vannak tiltva, a(z) " + plantName + " nevű növényhez nem ütemezünk értesítést.");
+            return;
+        }
+
         long triggerAtMillis = calculateTriggerTime(wateringFrequency);
 
         if (triggerAtMillis == -1) {
@@ -56,7 +67,7 @@ public class NotificationScheduler {
             notification.setPlantId(plantId);
             notification.setPlantName(plantName);
             notification.setNotificationTime(firstNotificationTime);
-            notification.setPlantImageUrl(plantImageUrl); // Elmentjük a kép URL-jét
+            notification.setPlantImageUrl(plantImageUrl);
             db.notificationDao().insertNotification(notification);
 
         } else {
@@ -69,7 +80,7 @@ public class NotificationScheduler {
         notificationIntent.setAction(WATERING_REMINDER_ACTION);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context,
-                plantId, // Ugyanaz a kérékkód, mint az ütemezéskor
+                plantId,
                 notificationIntent,
                 PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE
         );
