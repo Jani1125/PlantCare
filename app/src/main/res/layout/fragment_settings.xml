@@ -82,23 +82,6 @@
         tools:listitem="@layout/menu_item"/>
 
     <Switch
-        android:id="@+id/switch2"
-        style="@style/SwitchStyle"
-        android:layout_width="270dp"
-        android:layout_height="50dp"
-        android:background="@drawable/radius_background"
-        android:text="Reminder options"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.342"
-        tools:ignore="MissingConstraints" />
-
-    <Switch
         android:id="@+id/switch3"
         style="@style/SwitchStyle"
         android:layout_width="270dp"
@@ -112,16 +95,16 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.427"
+        app:layout_constraintVertical_bias="0.499"
         tools:ignore="MissingConstraints" />
 
     <Switch
-        android:id="@+id/switch4"
+        android:id="@+id/switch2"
         style="@style/SwitchStyle"
         android:layout_width="270dp"
         android:layout_height="50dp"
         android:background="@drawable/radius_background"
-        android:text="Room data settings"
+        android:text="Reminder options"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -129,6 +112,7 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.513"
+        app:layout_constraintVertical_bias="0.414"
         tools:ignore="MissingConstraints" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
