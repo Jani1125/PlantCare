@@ -4,5 +4,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="light_background">#FFFFFFFF</color>
     <color name="light_text">#FF000000</color>
+    <color name="dark_text">#FFFFFFFF</color>
+    <color name="dark_background">#FF000000</color>
     <color name="radius_background_light">#EFEFEF</color>
+    <color name="radius_background_dark">#333333</color>
 </resources>
