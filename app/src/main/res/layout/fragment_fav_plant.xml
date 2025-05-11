@@ -98,13 +98,14 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/favrecyclerView"
-        android:layout_width="318dp"
-        android:layout_height="529dp"
-        android:layout_marginBottom="192dp"
+        android:layout_width="320dp"
+        android:layout_height="435dp"
         android:background="@drawable/radius_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        app:layout_constraintVertical_bias="0.4"
         tools:ignore="SpeakableTextPresentCheck" />
 </androidx.constraintlayout.widget.ConstraintLayout>

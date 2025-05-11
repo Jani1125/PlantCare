@@ -70,18 +70,21 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
+
     <Button
         android:id="@+id/btn_addPlant"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
         android:backgroundTint="@color/light_background"
         android:text="Add new plant"
         android:textColor="@color/black"
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@id/ownplantrecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <Button
         android:id="@+id/btn_Back"
@@ -125,13 +128,14 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ownplantrecyclerView"
-        android:layout_width="318dp"
-        android:layout_height="529dp"
-        android:layout_marginBottom="192dp"
+        android:layout_width="320dp"
+        android:layout_height="435dp"
         android:background="@drawable/radius_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.537"
         tools:ignore="SpeakableTextPresentCheck" />
 </androidx.constraintlayout.widget.ConstraintLayout>

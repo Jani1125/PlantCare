@@ -5,7 +5,6 @@
     android:id="@+id/plant_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FFFFFF"
     android:padding="16dp">
 
     <!-- Plant Image -->
@@ -14,6 +13,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Back"
+        android:backgroundTint="@color/light_background"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -54,7 +55,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Scientific Name"
-            android:textColor="#666"
             android:textSize="16sp" />
 
         <!-- Type Row -->
@@ -133,7 +133,6 @@
         android:layout_height="wrap_content"
         android:lineSpacingExtra="4dp"
         android:text="Long description here..."
-        android:textColor="#444"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
